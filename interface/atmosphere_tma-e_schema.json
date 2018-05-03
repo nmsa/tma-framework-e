@@ -1,5 +1,5 @@
 {
-    "title": "tma-e_schema_0_1",
+    "title": "tma-e_schema_0_2",
 
     "$id": "http://atmosphere-eubrazil.eu/tma-e_schema_v0.2.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -17,8 +17,8 @@
             "default": -1,
             "minimum": 0
         },
-        "sentTime": {
-            "$id": "/properties/sentTime",
+        "timestamp": {
+            "$id": "/properties/timestamp",
             "type": "integer",
             "default": -1,
             "minimum": 0
@@ -37,7 +37,7 @@
         "resourceId",
         "messageId",
         "action",
-        "sentTime"
+        "timestamp"
     ]
 }
 
