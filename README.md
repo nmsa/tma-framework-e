@@ -22,7 +22,7 @@ Each message will include:
 * `configuration` -- configuration data for the `action`, which can be included in the form of a JSON object.
 
 `Actuators`, `actions` and respective `configuration` data must be configured in the system, and saved in the knowledge base. 
-`Actuators` can be added by the administrator that should add information about them, including the types of available adaptations, foresseen effects and the definition of rules that specify if one adaptation should be triggered.
+`Actuators` can be added by the administrator that should add information about them, including the types of available adaptations, foreseen effects and the definition of rules that specify if one adaptation should be triggered.
 
 
 
