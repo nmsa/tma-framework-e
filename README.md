@@ -24,11 +24,11 @@ Each message will include:
 `Actuators`, `actions` and respective `configuration` data must be configured in the system, and saved in the knowledge base. 
 `Actuators` can be added by the administrator that should add information about them, including the types of available adaptations, foreseen effects and the definition of rules that specify if one adaptation should be triggered.
 
+-
 
+![Execution Usage Sequence Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/35169ffe7ae73418cde3caf4e9545f729c83acee/architecture/diagrams/TMA-E/TMA-E_Actuation.jpg)
+<COMMENT: THIS PATH NEEDS TO BE UPDATED>
 
+The executor component will encrypt the message to be sent to the ActuatorAPI. In order to encrypt the message, both the private and public keys are needed, besides the information about the adaptation operation.
 
-
-
-
-
-
+Then, the executor will invoke the ActuatorAPI, which will be responsible to decrypt the message. After decryptying the message, the ActuatorAPI will invoke the proper operation to be performed in the corresponding resource.
