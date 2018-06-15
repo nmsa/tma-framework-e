@@ -32,3 +32,14 @@ Each message will include:
 The executor component will encrypt the message to be sent to the ActuatorAPI. In order to encrypt the message, both the private and public keys are needed, besides the information about the adaptation operation.
 
 Then, the executor will invoke the ActuatorAPI, which will be responsible to decrypt the message. After decryptying the message, the ActuatorAPI will invoke the proper operation to be performed in the corresponding resource.
+
+-
+
+![Actuator Class Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/35169ffe7ae73418cde3caf4e9545f729c83acee/architecture/diagrams/TMA-E/TMA-E_Actuator_ClassDiagram.jpg)
+<COMMENT: THIS PATH NEEDS TO BE UPDATED>
+
+The interaction with TMA will be done through Actuators, which will be provided by each system. In order to establish the communication, each system has to implement its own Actuator. It should be a **ConcreteActuator**, which implements the interface **Actuator**. The method to be implemented is _act_, which has the following parameters:
+
+* `resourceId` -- identifies the resource that is the subject of the adaptation
+* `action` -- name of the action to be performed. This will be used to inform the ActuatorAPI about which action to be performed
+* `config` -- list (key/value) of attributes to execute the operation
