@@ -3,6 +3,18 @@
 The key components of the of the [**ATMOSPHERE**](http://www.atmosphere-eubrazil.eu) ecosystem will provide adaptation mechanisms to cope with the trustworthiness level goals.
 These mechanisms are controlled by `actuators` which are in turn invoked by the `TMA_Execute`. 
 
+
+
+```
+TO BE COMPLETED: Execute Component Overview
+```
+
+
+
+
+## Actuators Definition
+
+
 Although the development of each `actuator` depends on the component with which it integrates, all the `actuators` will follow a standard architecture and provide a similar interface in order to integrate with the `TMA_Execute`. 
 
 
