@@ -36,16 +36,19 @@ Each message will include:
 * `configuration` -- configuration data for the `action`, which can be included in the form of a JSON object.
 
 `Actuators`, `actions` and respective `configuration` data must be configured in the system, and saved in the knowledge base. 
-`Actuators` can be added by the administrator that should add information about them, including the types of available adaptations, foreseen effects and the definition of rules that specify if one adaptation should be triggered.
+`Actuators` can be added by the administrator that should add information about them, including the types of available adaptations, foreseen effects and the definition of rules that specify if one adaptation should be triggered. To this process we call [Registration of Actuators](https://github.com/eubr-atmosphere/tma-framework-k#registration-of-actuators), presented in detail in the [`TMA_Knowledge`](https://github.com/eubr-atmosphere/tma-framework-k) description.
 
--
+
+### Actuation process
+
 ![Execution Usage Sequence Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/master/architecture/diagrams/TMA-E/TMA-E_Actuation.jpg)
 
 The executor component will encrypt the message to be sent to the ActuatorAPI. In order to encrypt the message, both the private and public keys are needed, besides the information about the adaptation operation.
 
 Then, the executor will invoke the ActuatorAPI, which will be responsible to decrypt the message. After decryptying the message, the ActuatorAPI will invoke the proper operation to be performed in the corresponding resource.
 
--
+### Development of Actuators
+
 ![Actuator Class Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/master/architecture/diagrams/TMA-E/TMA-E_Actuator_ClassDiagram.jpg)
 
 The interaction with TMA will be done through Actuators, which will be provided by each system. In order to establish the communication, each system has to implement its own Actuator. It should be a **ConcreteActuator**, which implements the interface **Actuator**. The method to be implemented is _act_, which has the following parameters:
