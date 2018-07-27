@@ -4,12 +4,9 @@ The key components of the of the [**ATMOSPHERE**](http://www.atmosphere-eubrazil
 These mechanisms are controlled by `actuators` which are in turn invoked by the `TMA_Execute`. 
 
 
-
 ```
 TO BE COMPLETED: Execute Component Overview
 ```
-
-
 
 
 ## Actuators Definition
@@ -37,18 +34,14 @@ Each message will include:
 `Actuators` can be added by the administrator that should add information about them, including the types of available adaptations, foreseen effects and the definition of rules that specify if one adaptation should be triggered.
 
 -
-
-![Execution Usage Sequence Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/35169ffe7ae73418cde3caf4e9545f729c83acee/architecture/diagrams/TMA-E/TMA-E_Actuation.jpg)
-<COMMENT: THIS PATH NEEDS TO BE UPDATED>
+![Execution Usage Sequence Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/master/architecture/diagrams/TMA-E/TMA-E_Actuation.jpg)
 
 The executor component will encrypt the message to be sent to the ActuatorAPI. In order to encrypt the message, both the private and public keys are needed, besides the information about the adaptation operation.
 
 Then, the executor will invoke the ActuatorAPI, which will be responsible to decrypt the message. After decryptying the message, the ActuatorAPI will invoke the proper operation to be performed in the corresponding resource.
 
 -
-
-![Actuator Class Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/35169ffe7ae73418cde3caf4e9545f729c83acee/architecture/diagrams/TMA-E/TMA-E_Actuator_ClassDiagram.jpg)
-<COMMENT: THIS PATH NEEDS TO BE UPDATED>
+![Actuator Class Diagram](https://github.com/eubr-atmosphere/tma-framework/blob/master/architecture/diagrams/TMA-E/TMA-E_Actuator_ClassDiagram.jpg)
 
 The interaction with TMA will be done through Actuators, which will be provided by each system. In order to establish the communication, each system has to implement its own Actuator. It should be a **ConcreteActuator**, which implements the interface **Actuator**. The method to be implemented is _act_, which has the following parameters:
 
