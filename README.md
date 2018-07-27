@@ -3,10 +3,15 @@
 The key components of the of the [**ATMOSPHERE**](http://www.atmosphere-eubrazil.eu) ecosystem will provide adaptation mechanisms to cope with the trustworthiness level goals.
 These mechanisms are controlled by `actuators` which are in turn invoked by the `TMA_Execute`. 
 
+Runtime adaptation is required to achieve/maintain the desired levels of trustworthiness. 
+The `TMA_Planning` structures the actions needed to achieve goals and objectives. 
+It creates or selects a procedure to perform a desired update in the managed resource. 
+The `TMA_Execute` is the responsible to change the behavior of managed resources using the actuators based on the actions recommended by the `TMA_Planning`.
 
-```
-TO BE COMPLETED: Execute Component Overview
-```
+Based on the idea of a runtime assessment of trustworthiness, we understand that the managed resources should be adapted to improve trustworthiness. The ability of such a system to adapt its own behavior and/or structure in response to changes occurring to the system itself, its environment, or even its goals at runtime is called self-adaptation. 
+Examples of such changes include requirements and execution environments, failures, as well as bug fixes and security issues.
+
+These adaptations are implemented by actuators, which are key components that have the ability to change the managed element by adapting rules/policies implemented at the different layers/resources of the system. 
 
 
 ## Actuators Definition
