@@ -1,5 +1,7 @@
 package eubr.atmosphere.tma.execute;
 
+import java.io.IOException;
+
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -11,6 +13,7 @@ import com.google.gson.Gson;
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
+import eubr.atmosphere.tma.execute.utils.RestServices;
 import eubr.atmosphere.tma.utils.Score;
 
 /**
@@ -32,6 +35,9 @@ public class Main
         int noMessageFound = 0;
         int maxNoMessageFoundCount = Integer.parseInt(
                 PropertiesManager.getInstance().getProperty("maxNoMessageFoundCount"));
+
+        Action action = new Action("", 10);
+        act(obtainActuator(action), action);
 
         try {
             while (true) {
@@ -66,10 +72,9 @@ public class Main
 
     private static void validateValue(ConsumerRecord<Long, String> record) {
         LOGGER.info(record.toString());
-        String stringJsonAction = record.value();
+        /*String stringJsonAction = record.value();
         Action action = new Gson().fromJson(stringJsonAction, Action.class);
-        Actuator actuator = obtainActuator(action);
-        act(actuator, action);
+        act(obtainActuator(action), action);*/
     }
 
     private static void sleep(int millis) {
@@ -85,7 +90,7 @@ public class Main
 
         // TODO: It needs to select the data from the database
         Actuator actuator = new Actuator();
-        actuator.setAddress("my-address");
+        actuator.setAddress("https://jsonplaceholder.typicode.com/posts");
         actuator.setPubKey("my-key");
 
         return actuator;
@@ -94,5 +99,11 @@ public class Main
     private static void act(Actuator actuator, Action action) {
         // TODO: Request the REST service (actuator), with the definition from the Action
         LOGGER.info("ACTUATION TO BE IMPLEMENTED: " + actuator);
+        try {
+            RestServices.requestRestService(actuator, action);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
