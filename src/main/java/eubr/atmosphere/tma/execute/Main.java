@@ -6,7 +6,12 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
+import eubr.atmosphere.tma.data.Action;
+import eubr.atmosphere.tma.data.Actuator;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
+import eubr.atmosphere.tma.utils.Score;
 
 /**
  * Hello world!
@@ -25,6 +30,8 @@ public class Main
 
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
         int noMessageFound = 0;
+        int maxNoMessageFoundCount = Integer.parseInt(
+                PropertiesManager.getInstance().getProperty("maxNoMessageFoundCount"));
 
         try {
             while (true) {
@@ -35,13 +42,11 @@ public class Main
               if (consumerRecords.count() == 0) {
                   noMessageFound++;
 
-                  int maxNoMessageFoundCount =
-                          Integer.parseInt(PropertiesManager.getInstance().getProperty("maxNoMessageFoundCount"));
                   if (noMessageFound > maxNoMessageFoundCount) {
                     // If no message found count is reached to threshold exit loop.
                       sleep(2000);
                   } else {
-                    continue;
+                      continue;
                   }
               }
 
@@ -52,6 +57,7 @@ public class Main
 
               // commits the offset of record to broker.
               consumer.commitAsync();
+              sleep(30000);
             }
         } finally {
             consumer.close();
@@ -60,6 +66,10 @@ public class Main
 
     private static void validateValue(ConsumerRecord<Long, String> record) {
         LOGGER.info(record.toString());
+        String stringJsonAction = record.value();
+        Action action = new Gson().fromJson(stringJsonAction, Action.class);
+        Actuator actuator = obtainActuator(action);
+        act(actuator, action);
     }
 
     private static void sleep(int millis) {
@@ -68,5 +78,21 @@ public class Main
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Actuator obtainActuator(Action action) {
+        // This method can go to TMA-K component
+
+        // TODO: It needs to select the data from the database
+        Actuator actuator = new Actuator();
+        actuator.setAddress("my-address");
+        actuator.setPubKey("my-key");
+
+        return actuator;
+    }
+
+    private static void act(Actuator actuator, Action action) {
+        // TODO: Request the REST service (actuator), with the definition from the Action
+        LOGGER.info("ACTUATION TO BE IMPLEMENTED: " + actuator);
     }
 }
