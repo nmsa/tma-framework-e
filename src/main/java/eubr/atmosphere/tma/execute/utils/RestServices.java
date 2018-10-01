@@ -1,17 +1,13 @@
 package eubr.atmosphere.tma.execute.utils;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
-import eubr.atmosphere.tma.data.Configuration;
 
 public class RestServices {
 
@@ -24,18 +20,7 @@ public class RestServices {
         con.setRequestProperty("Content-Type", "application/json");
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
-        
-        Map<String, String> parameters = new HashMap<>();
-        for (Configuration conf : action.getConfigurationList()) {
-            parameters.put(conf.getKeyName(), conf.getValue());
-        }
-         
-        con.setDoOutput(true);
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-        out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
-        out.flush();
-        out.close();
-        
+
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
