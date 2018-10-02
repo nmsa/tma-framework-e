@@ -8,6 +8,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
@@ -28,8 +30,8 @@ public class Main
 
     private static void runConsumer() {
 
-        Action action = new Action("", 10);
-        act(obtainActuator(action), action);
+        /*Action action = new Action("", 10);
+        act(obtainActuator(action), action);*/
 
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
         int noMessageFound = 0;
@@ -69,9 +71,9 @@ public class Main
 
     private static void validateValue(ConsumerRecord<Long, String> record) {
         LOGGER.info(record.toString());
-        /*String stringJsonAction = record.value();
+        String stringJsonAction = record.value();
         Action action = new Gson().fromJson(stringJsonAction, Action.class);
-        act(obtainActuator(action), action);*/
+        act(obtainActuator(action), action);
     }
 
     private static void sleep(int millis) {
@@ -103,13 +105,13 @@ public class Main
         }
 
         // TODO: Request the REST service (actuator), with the definition from the Action
-        LOGGER.info("ACTUATION TO BE IMPLEMENTED: " + actuator);
+        /*LOGGER.info("ACTUATION TO BE IMPLEMENTED: " + actuator);
         actuator.setAddress("https://jsonplaceholder.typicode.com/posts");
         try {
             RestServices.requestRestService(actuator, action);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }
+        }*/
     }
 }
