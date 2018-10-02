@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
+import eubr.atmosphere.tma.data.Configuration;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
 import eubr.atmosphere.tma.execute.utils.RestServices;
 
@@ -30,7 +31,10 @@ public class Main
 
     private static void runConsumer() {
 
-        /*Action action = new Action("", 10);
+        /*Action action = new Action("scale", 10);
+        action.addConfiguration(new Configuration("metadata.namespace", "default"));
+        action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
+        action.addConfiguration(new Configuration("spec.replicas", "8"));
         act(obtainActuator(action), action);*/
 
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
@@ -89,7 +93,7 @@ public class Main
 
         // TODO: It needs to select the data from the database
         Actuator actuator = new Actuator();
-        actuator.setAddress("http://192.168.122.34:8089/apis/extensions/v1beta1/namespaces/default/deployments/tma-analyze/scale");
+        actuator.setAddress("http://192.168.122.34:8089/apis/extensions/v1beta1/namespaces/default/deployments/tma-analyze/");
         actuator.setPubKey("my-key");
 
         return actuator;

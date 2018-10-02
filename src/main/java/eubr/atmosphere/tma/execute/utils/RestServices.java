@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
+import eubr.atmosphere.tma.data.Configuration;
 
 public class RestServices {
 
@@ -37,7 +39,7 @@ public class RestServices {
     public static void requestPutRestService(Actuator actuator, Action action) throws IOException {
         // FIXME It would be better to use PATCH instead of PUT.
         //       However, the first experiments did not work, and we decided to move with PUT.
-        URL url = new URL(actuator.getAddress());
+        URL url = new URL(actuator.getAddress() + action.getAction());
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("PUT");
         con.setRequestProperty("Content-Type", "application/json");
@@ -45,13 +47,35 @@ public class RestServices {
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
 
+        String namespace = "";
+        String name = "";
+        String replicas = "";
+
+        List<Configuration> confList = action.getConfigurationList();
+        for (int i = 0; i < confList.size(); i++) {
+            Configuration conf = confList.get(i);
+            switch (conf.getKeyName()) {
+            case "metadata.namespace":
+                namespace = conf.getValue();
+                break;
+            case "metadata.name":
+                name = conf.getValue();
+                break;
+            case "spec.replicas":
+                replicas = conf.getValue();
+                break;
+            default:
+                break;
+            }
+        }
+
         String newPayload = "{\n" +
                 "  \"metadata\": {\n" +
-                "    \"namespace\": \"default\",\n" +
-                "    \"name\": \"tma-analyze\"\n" +
+                "    \"namespace\": \"" + namespace + "\",\n" +
+                "    \"name\": \"" + name + "\"\n" +
                 "  },\n" +
                 "  \"spec\": {\n" +
-                "    \"replicas\": 4\n" +
+                "    \"replicas\": " + replicas + "\n" +
                 "  }\n" +
                 "}";
 
