@@ -18,9 +18,10 @@ public class RestServices {
         // Reference: https://www.baeldung.com/java-http-request
         URL url = new URL(actuator.getAddress() +
                 "?action=" + action.getAction() +
-                "&resourceId=" + action.getResourceId());
+                "&resourceId=" + action.getResourceId() +
+                "&configuration=" + action.getResourceId());
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
+        con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json");
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
