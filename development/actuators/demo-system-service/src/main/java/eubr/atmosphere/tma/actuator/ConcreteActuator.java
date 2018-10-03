@@ -1,17 +1,15 @@
 package eubr.atmosphere.tma.actuator;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component("actuator")
 public class ConcreteActuator implements Actuator {
 
 	@Override
-	public void act(int resourceId, String action, Map<String, Object> config) {
+	public void act(ActuatorPayload actuatorPayload) {
 		// This is the actuation itself.
 		// TODO Decide what action to perform, and perform it
-		
+		String action = actuatorPayload.getAction();
 		switch (action) {
 		case "action1":
 			System.out.println("Action 1" + action);

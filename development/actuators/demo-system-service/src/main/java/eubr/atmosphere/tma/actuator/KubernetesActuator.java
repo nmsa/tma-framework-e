@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import eubr.atmosphere.tma.actuator.services.RestServices;
@@ -15,34 +16,34 @@ import eubr.atmosphere.tma.actuator.services.RestServices;
 public class KubernetesActuator implements Actuator {
 
     @Override
-    @RequestMapping("/act")
-    public void act(int resourceId, String action, @RequestParam Map<String, Object> config) {
-        switch (action) {
+    @PostMapping(path = "/act")
+    public void act(@RequestBody ActuatorPayload actuatorPayload) {
+        switch (actuatorPayload.getAction()) {
         case "scale":
-            scalePods(resourceId, action, config);
-            break;
             
+            scalePods(actuatorPayload.getResourceId(),
+                    actuatorPayload.getAction(), actuatorPayload.getConfiguration());
+            break;
+
         default:
-            System.out.println("Not defined action: " + action);
+            System.out.println("Not defined action");
             break;
         }
     }
 
-    private void scalePods(int resourceId, String action, Map<String, Object> config) {
+    private void scalePods(int resourceId, String action, Map<String, String> config) {
         System.out.println("scale: " + action);
         System.out.println("resourceId: " + resourceId);
         System.out.println(config);
 
         Map<String, Object> configuration = new HashMap<String, Object>();
-        configuration.put("metadata.namespace", "default");
-        configuration.put("metadata.name", "tma-analyze");
-        configuration.put("spec.replicas", "6");
+        configuration.put("metadata.namespace", config.get("metadata.namespace"));
+        configuration.put("metadata.name", config.get("metadata.name"));
+        configuration.put("spec.replicas", config.get("spec.replicas"));
         try {
             RestServices.requestPutRestService(configuration);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
-
 }

@@ -63,7 +63,10 @@ public class DemoSystemServiceApplicationTests {
 		try {
 			
 			System.out.println(this.json(actuator));
-			actuator.act(0, "test_action", null);
+			ActuatorPayload actuatorPayload = new ActuatorPayload();
+			actuatorPayload.setAction("test_action");
+			actuatorPayload.setResourceId(0);
+			actuator.act(actuatorPayload);
 			
 			mockMvc.perform(post("/ActuatorAPI/register")
 			        .content(
