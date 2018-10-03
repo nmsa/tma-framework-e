@@ -1,7 +1,6 @@
 package eubr.atmosphere.tma.actuator;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +20,7 @@ public class KubernetesActuator implements Actuator {
         switch (actuatorPayload.getAction()) {
         case "scale":
             
-            scalePods(actuatorPayload.getResourceId(),
-                    actuatorPayload.getAction(), actuatorPayload.getConfiguration());
+            scalePods(actuatorPayload);
             break;
 
         default:
@@ -31,17 +29,16 @@ public class KubernetesActuator implements Actuator {
         }
     }
 
-    private void scalePods(int resourceId, String action, Map<String, String> config) {
-        System.out.println("scale: " + action);
-        System.out.println("resourceId: " + resourceId);
+    private void scalePods(ActuatorPayload actuatorPayload) {
+        System.out.println("scale: " + actuatorPayload.getAction());
+        System.out.println("resourceId: " + actuatorPayload.getResourceId());
+        System.out.println("messageId: " + actuatorPayload.getMessageId());
+        System.out.println("timestamp: " + actuatorPayload.getTimestamp());
+        Map<String, String> config = actuatorPayload.getConfiguration();
         System.out.println(config);
 
-        Map<String, Object> configuration = new HashMap<String, Object>();
-        configuration.put("metadata.namespace", config.get("metadata.namespace"));
-        configuration.put("metadata.name", config.get("metadata.name"));
-        configuration.put("spec.replicas", config.get("spec.replicas"));
         try {
-            RestServices.requestPutRestService(configuration);
+            RestServices.requestPutRestService(config);
         } catch (IOException e) {
             e.printStackTrace();
         }
