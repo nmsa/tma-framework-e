@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.List;
 
 import com.google.gson.JsonObject;
@@ -15,6 +16,8 @@ import eubr.atmosphere.tma.data.Actuator;
 import eubr.atmosphere.tma.data.Configuration;
 
 public class RestServices {
+
+    private static int messageId = 0;
 
     public static void requestRestService(Actuator actuator, Action action) throws IOException {
         // Reference: https://www.baeldung.com/java-http-request
@@ -113,8 +116,11 @@ public class RestServices {
         for (Configuration config: action.getConfigurationList()) {
             configurationJson.addProperty(config.getKeyName(), config.getValue());
         }
-        jsonObject.addProperty("action", action.getAction());
+
         jsonObject.addProperty("resourceId", action.getResourceId());
+        jsonObject.addProperty("messageId", messageId++);
+        jsonObject.addProperty("timestamp", Calendar.getInstance().getTimeInMillis());
+        jsonObject.addProperty("action", action.getAction());
         jsonObject.add("configuration", configurationJson);
         return jsonObject.toString();
     }
