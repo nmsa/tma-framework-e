@@ -16,7 +16,9 @@ public class RestServices {
 
     public static void requestRestService(Actuator actuator, Action action) throws IOException {
         // Reference: https://www.baeldung.com/java-http-request
-        URL url = new URL(actuator.getAddress());
+        URL url = new URL(actuator.getAddress() +
+                "?action=" + action.getAction() +
+                "&resourceId=" + action.getResourceId());
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");

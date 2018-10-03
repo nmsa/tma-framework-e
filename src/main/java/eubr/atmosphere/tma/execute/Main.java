@@ -16,10 +16,6 @@ import eubr.atmosphere.tma.data.Configuration;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
 import eubr.atmosphere.tma.execute.utils.RestServices;
 
-/**
- * Hello world!
- *
- */
 public class Main 
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
@@ -31,11 +27,11 @@ public class Main
 
     private static void runConsumer() {
 
-        /*Action action = new Action("scale", 10);
+        Action action = new Action("scale", 100);
         action.addConfiguration(new Configuration("metadata.namespace", "default"));
         action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
-        action.addConfiguration(new Configuration("spec.replicas", "8"));
-        act(obtainActuator(action), action);*/
+        action.addConfiguration(new Configuration("spec.replicas", "3"));
+        act(obtainActuator(action), action);
 
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
         int noMessageFound = 0;
@@ -93,7 +89,7 @@ public class Main
 
         // TODO: It needs to select the data from the database
         Actuator actuator = new Actuator();
-        actuator.setAddress("http://192.168.122.34:8089/apis/extensions/v1beta1/namespaces/default/deployments/tma-analyze/");
+        actuator.setAddress("http://10.1.60.117:8080/k8sActuator/act");
         actuator.setPubKey("my-key");
 
         return actuator;
@@ -102,7 +98,7 @@ public class Main
     private static void act(Actuator actuator, Action action) {
         // Perform the adaptation (Part of it will be moved to the Actuator)
         try {
-            RestServices.requestPutRestService(actuator, action);
+            RestServices.requestRestService(actuator, action);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
