@@ -8,6 +8,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
+import com.google.gson.JsonObject;
+
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
 import eubr.atmosphere.tma.data.Configuration;
@@ -16,10 +18,11 @@ public class RestServices {
 
     public static void requestRestService(Actuator actuator, Action action) throws IOException {
         // Reference: https://www.baeldung.com/java-http-request
+        String configurationString = getJsonObject(action.getConfigurationList());
         URL url = new URL(actuator.getAddress() +
                 "?action=" + action.getAction() +
                 "&resourceId=" + action.getResourceId() +
-                "&configuration=" + action.getResourceId());
+                "&configuration=" + configurationString);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json");
@@ -99,5 +102,13 @@ public class RestServices {
         in.close();
 
         con.disconnect();
+    }
+
+    private static String getJsonObject(List<Configuration> configurationList) {
+        JsonObject jsonObject = new JsonObject();
+        for (Configuration config: configurationList) {
+            jsonObject.addProperty(config.getKeyName(), config.getValue());
+        }
+        return jsonObject.toString();
     }
 }
