@@ -18,16 +18,19 @@ public class RestServices {
 
     public static void requestRestService(Actuator actuator, Action action) throws IOException {
         // Reference: https://www.baeldung.com/java-http-request
-        String configurationString = getJsonObject(action.getConfigurationList());
-        URL url = new URL(actuator.getAddress() +
-                "?action=" + action.getAction() +
-                "&resourceId=" + action.getResourceId() +
-                "&configuration=" + configurationString);
+        String payload = getJsonObject(action);
+        URL url = new URL(actuator.getAddress());
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json");
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
+
+        con.setDoOutput(true);
+        DataOutputStream out = new DataOutputStream(con.getOutputStream());
+        out.writeBytes(payload);
+        out.flush();
+        out.close();
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
@@ -104,11 +107,15 @@ public class RestServices {
         con.disconnect();
     }
 
-    private static String getJsonObject(List<Configuration> configurationList) {
+    private static String getJsonObject(Action action) {
         JsonObject jsonObject = new JsonObject();
-        for (Configuration config: configurationList) {
-            jsonObject.addProperty(config.getKeyName(), config.getValue());
+        JsonObject configurationJson = new JsonObject();
+        for (Configuration config: action.getConfigurationList()) {
+            configurationJson.addProperty(config.getKeyName(), config.getValue());
         }
+        jsonObject.addProperty("action", action.getAction());
+        jsonObject.addProperty("resourceId", action.getResourceId());
+        jsonObject.add("configuration", configurationJson);
         return jsonObject.toString();
     }
 }
