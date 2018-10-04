@@ -1,4 +1,4 @@
-package eubr.atmosphere.tma.actuator;
+package eubr.atmosphere.tma.actuator.examples;
 
 public class DataTransferObject {
     

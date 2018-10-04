@@ -1,4 +1,4 @@
-package eubr.atmosphere.tma.actuator;
+package eubr.atmosphere.tma.actuator.examples;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
