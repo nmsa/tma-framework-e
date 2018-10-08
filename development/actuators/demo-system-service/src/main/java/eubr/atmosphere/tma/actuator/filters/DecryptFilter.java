@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletRequestWritableWrapper;
+import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseReadableWrapper;
 
 @WebFilter(filterName = "decryptFilter", urlPatterns = {"/securePOC*"})
 @Component
@@ -62,20 +63,18 @@ public class DecryptFilter implements Filter {
 
         PrivateKey privateKey = getPrivateKey();
 
-        byte[] bodyBytes = getBody(req);
-        System.out.println(bodyBytes);
-        String decryptedData = decrypt(bodyBytes, privateKey);
+        byte[] bodyBytes = decrypt(getBody(req), privateKey);
+        String decryptedData = new String(bodyBytes);
         LOGGER.info(decryptedData);
 
         HttpServletRequestWritableWrapper requestWrapper =
                 new HttpServletRequestWritableWrapper(
                         (HttpServletRequest) request, bodyBytes);
 
-            /*HttpServletResponseReadableWrapper responseWrapper
-                = new HttpServletResponseReadableWrapper(
-                    response);*/
+            HttpServletResponseReadableWrapper responseWrapper
+                = new HttpServletResponseReadableWrapper((HttpServletResponse) response);
 
-        chain.doFilter(requestWrapper, response/*responseWrapper*/);
+        chain.doFilter(requestWrapper, responseWrapper);
         LOGGER.info( "Logging Response :{}", res.getContentType());
 
         /*String encryptedData = encrypt(responseWrapper, ...);
@@ -168,7 +167,7 @@ public class DecryptFilter implements Filter {
         return null;
     }
 
-    public static String decrypt(byte[] text, PrivateKey key) {
+    public static byte[] decrypt(byte[] text, PrivateKey key) {
         byte[] dectyptedText = null;
         try {
             // get an RSA cipher object and print the provider
@@ -181,7 +180,7 @@ public class DecryptFilter implements Filter {
          } catch (Exception ex) {
              ex.printStackTrace();
          }
-         return new String(dectyptedText);
+         return dectyptedText;
     }
 
     public class GenericRequestWrapper extends HttpServletRequestWrapper {
