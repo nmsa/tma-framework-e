@@ -30,7 +30,7 @@ public class KubernetesActuator implements Actuator {
     }
 
     private void scalePods(ActuatorPayload actuatorPayload) {
-        System.out.println("scale: " + actuatorPayload.getAction());
+        System.out.println("action: " + actuatorPayload.getAction());
         System.out.println("resourceId: " + actuatorPayload.getResourceId());
         System.out.println("messageId: " + actuatorPayload.getMessageId());
         System.out.println("timestamp: " + actuatorPayload.getTimestamp());
