@@ -19,7 +19,6 @@ public class KubernetesActuator implements Actuator {
     public void act(@RequestBody ActuatorPayload actuatorPayload) {
         switch (actuatorPayload.getAction()) {
         case "scale":
-            
             scalePods(actuatorPayload);
             break;
 

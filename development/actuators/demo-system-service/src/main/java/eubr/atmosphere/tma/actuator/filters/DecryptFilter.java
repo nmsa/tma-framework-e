@@ -35,6 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import eubr.atmosphere.tma.actuator.wrappers.HttpServletRequestWritableWrapper;
+
 @WebFilter(filterName = "decryptFilter", urlPatterns = {"/securePOC*"})
 @Component
 public class DecryptFilter implements Filter {
@@ -56,7 +58,7 @@ public class DecryptFilter implements Filter {
         
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        LOGGER.info("Logging Request  {} : {}", req.getMethod(), req.getRequestURI());
+        LOGGER.info("Logging Request {} : {}", req.getMethod(), req.getRequestURI());
 
         PrivateKey privateKey = getPrivateKey();
 
@@ -65,16 +67,19 @@ public class DecryptFilter implements Filter {
         String decryptedData = decrypt(bodyBytes, privateKey);
         LOGGER.info(decryptedData);
 
-        /*HttpServletRequestWritableWrapper requestWrapper =
+        HttpServletRequestWritableWrapper requestWrapper =
                 new HttpServletRequestWritableWrapper(
-                    request, decryptedData);
+                        (HttpServletRequest) request, bodyBytes);
 
-            HttpServletResponseReadableWrapper responseWrapper
+            /*HttpServletResponseReadableWrapper responseWrapper
                 = new HttpServletResponseReadableWrapper(
-                    response);
+                    response);*/
 
-        chain.doFilter(request, response);*/
+        chain.doFilter(requestWrapper, response/*responseWrapper*/);
         LOGGER.info( "Logging Response :{}", res.getContentType());
+
+        /*String encryptedData = encrypt(responseWrapper, ...);
+        response.getWriter().write(encryptedData);*/
     }
 
     private PrivateKey getPrivateKey() {
