@@ -1,13 +1,10 @@
 package eubr.atmosphere.tma.actuator.filters;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -27,7 +24,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
@@ -36,7 +32,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletRequestWritableWrapper;
-import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseReadableWrapper;
+import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseCopier;
+//import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseReadableWrapper;
 
 @WebFilter(filterName = "decryptFilter", urlPatterns = {"/securePOC*"})
 @Component
@@ -49,19 +46,22 @@ public class DecryptFilter implements Filter {
     // This is the current test:
     // curl --header "Content-Type: text/plain" --request POST --data-binary "@encrypted-message" http://localhost:8080/securePOC/act
 
+    // Reference: https://www.taringamberini.com/en/blog/java/adding-encryption-to-a-restful-web-service/
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException { }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
         System.out.println("MyFilter.doFilter");
         
-        HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse res = (HttpServletResponse) response;
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        HttpServletResponse res = (HttpServletResponse) servletResponse;
         LOGGER.info("Logging Request {} : {}", req.getMethod(), req.getRequestURI());
 
         PrivateKey privateKey = getPrivateKey();
+        PublicKey publicKey = getPublicKey();
 
         byte[] bodyBytes = decrypt(getBody(req), privateKey);
         String decryptedData = new String(bodyBytes);
@@ -69,16 +69,32 @@ public class DecryptFilter implements Filter {
 
         HttpServletRequestWritableWrapper requestWrapper =
                 new HttpServletRequestWritableWrapper(
-                        (HttpServletRequest) request, bodyBytes);
+                        (HttpServletRequest) servletRequest, bodyBytes);
 
-            HttpServletResponseReadableWrapper responseWrapper
-                = new HttpServletResponseReadableWrapper((HttpServletResponse) response);
+        /*HttpServletResponseReadableWrapper responseWrapper
+            = new HttpServletResponseReadableWrapper(res);*/
 
-        chain.doFilter(requestWrapper, responseWrapper);
+        /////////////////////////////////////////////////////////////////////////////
+
+        HttpServletResponseCopier responseCopier =
+                new HttpServletResponseCopier((HttpServletResponse) servletResponse);
+
+        try {
+            chain.doFilter(requestWrapper, responseCopier);
+            responseCopier.flushBuffer();
+        } finally {
+            byte[] copy = responseCopier.getByteArray();
+            LOGGER.info(new String(copy, servletResponse.getCharacterEncoding())); // Do your logging job here. This is just a basic example.
+            LOGGER.info("ANTES DO ENCRYPT: {}", new String(copy));
+            byte[] encryptedData = encrypt(new String(copy), publicKey);
+            LOGGER.info("encryptedData: " + new String(encryptedData));
+            servletResponse.getWriter().write(new String(encryptedData));
+        }
+
+        /////////////////////////////////////////////////////////////////////////////
+
         LOGGER.info( "Logging Response :{}", res.getContentType());
-
-        /*String encryptedData = encrypt(responseWrapper, ...);
-        response.getWriter().write(encryptedData);*/
+        //LOGGER.info( "ResponseWrapper: {}", responseWrapper.toString());
     }
 
     private PrivateKey getPrivateKey() {
@@ -183,38 +199,17 @@ public class DecryptFilter implements Filter {
          return dectyptedText;
     }
 
-    public class GenericRequestWrapper extends HttpServletRequestWrapper {
-
-        HttpServletRequest origRequest;
-        byte[] reqBytes;
-        boolean firstTime = true;
-
-        /**
-        * @param arg0
-        */
-        public GenericRequestWrapper(HttpServletRequest arg0) {
-            super(arg0);
-            origRequest = arg0;
-            // TODO Auto-generated constructor stub
-        }
-
-        public BufferedReader getReader() throws IOException {
-
-            if (firstTime) {
-                firstTime = false;
-                StringBuffer sbuf = new StringBuffer();
-                BufferedReader oreader = origRequest.getReader();
-                String line;
-                while((line = oreader.readLine()) != null) {
-                    sbuf.append(line);
-                    sbuf.append("\n\r");
-                }
-                reqBytes = sbuf.toString().getBytes();
-            }
-
-            InputStreamReader dave = new InputStreamReader(new ByteArrayInputStream(reqBytes));
-            BufferedReader br = new BufferedReader(dave);
-            return br;
-        }
-    }
+    public static byte[] encrypt(String text, PublicKey key) {
+        byte[] cipherText = null;
+        try {
+            // get an RSA cipher object and print the provider
+            final Cipher cipher = Cipher.getInstance(ALGORITHM);
+            // encrypt the plain text using the public key
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipherText = cipher.doFinal(text.getBytes());
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+          return cipherText;
+   }
 }
