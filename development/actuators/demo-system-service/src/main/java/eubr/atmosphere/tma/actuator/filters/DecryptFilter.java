@@ -5,17 +5,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -31,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import eubr.atmosphere.tma.actuator.crypto.SymmetricKeyManager;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletRequestWritableWrapper;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseCopier;
 //import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseReadableWrapper;
@@ -42,6 +51,10 @@ public class DecryptFilter implements Filter {
     private static final Logger LOGGER = LoggerFactory.getLogger(DecryptFilter.class);
 
     public static final String ALGORITHM = "RSA";
+    public static final Charset UTF_8 = Charset.forName("UTF-8");
+    public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
+    public static final String SECRET = "!@#$MySecr3tPasSw0rd";
+    public static final String SYMMETRIC_KEY_ALGORITHM = "AES";
 
     // This is the current test:
     // curl --header "Content-Type: text/plain" --request POST --data-binary "@encrypted-message" http://localhost:8080/securePOC/act
@@ -54,7 +67,7 @@ public class DecryptFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
-        System.out.println("MyFilter.doFilter");
+        LOGGER.info("DecryptFilter");
         
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse res = (HttpServletResponse) servletResponse;
@@ -84,17 +97,92 @@ public class DecryptFilter implements Filter {
             responseCopier.flushBuffer();
         } finally {
             byte[] copy = responseCopier.getByteArray();
-            LOGGER.info(new String(copy, servletResponse.getCharacterEncoding())); // Do your logging job here. This is just a basic example.
-            LOGGER.info("ANTES DO ENCRYPT: {}", new String(copy));
-            byte[] encryptedData = encrypt(new String(copy), publicKey);
-            LOGGER.info("encryptedData: " + new String(encryptedData));
-            servletResponse.getWriter().write(new String(encryptedData));
+            String plainResponse = new String(copy, servletResponse.getCharacterEncoding());
+            LOGGER.info("ANTES DO ENCRYPT: {}", plainResponse);
+
+            try {
+                String signedResponse = sign(plainResponse, privateKey);
+                LOGGER.info("signedResponse: " + signedResponse);
+                LOGGER.info("signedResponse.length: {}", signedResponse.length());
+                LOGGER.info("verifySignature: {}", verify(plainResponse, signedResponse, publicKey));
+                LOGGER.info("signedResponse.length: {}", Base64.getDecoder().decode(signedResponse).length);
+                byte[] encryptedData = getEncryptedData(signedResponse);
+                byte[] decryptedDataByteArray = getDecryptedData(encryptedData);
+                LOGGER.info("decryptedDataByteArray: " + new String(decryptedDataByteArray));
+
+                servletResponse.getWriter().write(new String(encryptedData));
+            } catch (InvalidKeyException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
 
         /////////////////////////////////////////////////////////////////////////////
 
         LOGGER.info( "Logging Response :{}", res.getContentType());
-        //LOGGER.info( "ResponseWrapper: {}", responseWrapper.toString());
+    }
+
+    public byte[] getEncryptedData(String message) {
+        SymmetricKeyManager skm;
+        byte[] output = null;
+        try {
+            skm = new SymmetricKeyManager(SECRET, 16, SYMMETRIC_KEY_ALGORITHM);
+            output = skm.encrypt(message);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    public byte[] getDecryptedData(byte[] message) {
+        SymmetricKeyManager skm;
+        byte[] output = null;
+        try {
+            skm = new SymmetricKeyManager(SECRET, 16, "AES");
+            output = skm.decrypt(message);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return output;
+    }
+
+    //The method that signs the data using the private key that is stored in keyFile path
+    public String sign(String data, PrivateKey keyFile) throws InvalidKeyException, Exception{
+        Signature privateSignature = Signature.getInstance(SIGNATURE_ALGORITHM);
+        privateSignature.initSign(keyFile);
+        privateSignature.update(data.getBytes(UTF_8));
+
+        byte[] signature = privateSignature.sign();
+        return Base64.getEncoder().encodeToString(signature);
+    }
+
+    public static boolean verify(String plainText, String signature, PublicKey publicKey) throws Exception {
+        Signature publicSignature = Signature.getInstance(SIGNATURE_ALGORITHM);
+        publicSignature.initVerify(publicKey);
+        publicSignature.update(plainText.getBytes(UTF_8));
+
+        byte[] signatureBytes = Base64.getDecoder().decode(signature);
+
+        return publicSignature.verify(signatureBytes);
     }
 
     private PrivateKey getPrivateKey() {
@@ -199,14 +287,14 @@ public class DecryptFilter implements Filter {
          return dectyptedText;
     }
 
-    public static byte[] encrypt(String text, PublicKey key) {
+    public static byte[] encrypt(byte[] text, PublicKey key) {
         byte[] cipherText = null;
         try {
             // get an RSA cipher object and print the provider
             final Cipher cipher = Cipher.getInstance(ALGORITHM);
             // encrypt the plain text using the public key
             cipher.init(Cipher.ENCRYPT_MODE, key);
-            cipherText = cipher.doFinal(text.getBytes());
+            cipherText = cipher.doFinal(text);
           } catch (Exception e) {
             e.printStackTrace();
           }
