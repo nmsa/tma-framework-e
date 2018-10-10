@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.SignatureException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
@@ -42,7 +43,6 @@ import org.springframework.stereotype.Component;
 import eubr.atmosphere.tma.actuator.crypto.SymmetricKeyManager;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletRequestWritableWrapper;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseCopier;
-//import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseReadableWrapper;
 
 @WebFilter(filterName = "decryptFilter", urlPatterns = {"/securePOC*"})
 @Component
@@ -52,7 +52,7 @@ public class DecryptFilter implements Filter {
 
     public static final String ALGORITHM = "RSA";
     public static final Charset UTF_8 = Charset.forName("UTF-8");
-    public static final String SIGNATURE_ALGORITHM = "MD5withRSA";
+    public static final String SIGNATURE_ALGORITHM = "SHA1withRSA";
     public static final String SECRET = "!@#$MySecr3tPasSw0rd";
     public static final String SYMMETRIC_KEY_ALGORITHM = "AES";
 
@@ -67,15 +67,10 @@ public class DecryptFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
-        LOGGER.info("DecryptFilter");
-        
         HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse res = (HttpServletResponse) servletResponse;
         LOGGER.info("Logging Request {} : {}", req.getMethod(), req.getRequestURI());
 
-        PrivateKey privateKey = getPrivateKey();
-        PublicKey publicKey = getPublicKey();
-
+        PrivateKey privateKey = getPrivateKey("/home/virt-atm/Documents/priv-key-again");
         byte[] bodyBytes = decrypt(getBody(req), privateKey);
         String decryptedData = new String(bodyBytes);
         LOGGER.info(decryptedData);
@@ -83,12 +78,6 @@ public class DecryptFilter implements Filter {
         HttpServletRequestWritableWrapper requestWrapper =
                 new HttpServletRequestWritableWrapper(
                         (HttpServletRequest) servletRequest, bodyBytes);
-
-        /*HttpServletResponseReadableWrapper responseWrapper
-            = new HttpServletResponseReadableWrapper(res);*/
-
-        /////////////////////////////////////////////////////////////////////////////
-
         HttpServletResponseCopier responseCopier =
                 new HttpServletResponseCopier((HttpServletResponse) servletResponse);
 
@@ -98,31 +87,42 @@ public class DecryptFilter implements Filter {
         } finally {
             byte[] copy = responseCopier.getByteArray();
             String plainResponse = new String(copy, servletResponse.getCharacterEncoding());
-            LOGGER.info("ANTES DO ENCRYPT: {}", plainResponse);
 
             try {
-                String signedResponse = sign(plainResponse, privateKey);
-                LOGGER.info("signedResponse: " + signedResponse);
-                LOGGER.info("signedResponse.length: {}", signedResponse.length());
-                LOGGER.info("verifySignature: {}", verify(plainResponse, signedResponse, publicKey));
-                LOGGER.info("signedResponse.length: {}", Base64.getDecoder().decode(signedResponse).length);
-                byte[] encryptedData = getEncryptedData(signedResponse);
-                byte[] decryptedDataByteArray = getDecryptedData(encryptedData);
-                LOGGER.info("decryptedDataByteArray: " + new String(decryptedDataByteArray));
-
-                servletResponse.getWriter().write(new String(encryptedData));
+                encryptResponse(servletResponse, privateKey, plainResponse);
             } catch (InvalidKeyException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (SignatureException e) {
                 e.printStackTrace();
             }
         }
+    }
 
-        /////////////////////////////////////////////////////////////////////////////
+    private void encryptResponse(ServletResponse servletResponse, PrivateKey privateKey,
+            String plainResponse) throws InvalidKeyException, IOException, NoSuchAlgorithmException, SignatureException {
 
-        LOGGER.info( "Logging Response :{}", res.getContentType());
+        PublicKey publicKeyActuator = getPublicKey("/home/virt-atm/Documents/pub-key-again");
+
+        byte[] signedResponseByteArray = sign(plainResponse, privateKey);
+        String signedResponse = Base64.getEncoder().encodeToString(signedResponseByteArray);
+        LOGGER.info("signedResponse: " + signedResponse);
+
+        byte[] encryptedData = getEncryptedData(signedResponse);
+        byte[] decryptedDataByteArray = getDecryptedData(encryptedData);
+
+        LOGGER.info("MAIS UM TESTE: {}", verify(plainResponse, new String(decryptedDataByteArray), publicKeyActuator));
+        LOGGER.info("encryptedData: {}", new String(encryptedData));
+        LOGGER.info("decryptedDataByteArray: " + new String(decryptedDataByteArray));
+
+        LOGGER.info("encryptedData.length: {}", encryptedData.length);
+        LOGGER.info("(new String(encryptedData)).length(): {}", (new String(encryptedData)).length());
+
+        PublicKey publicKeyExecutor = getPublicKey("/home/virt-atm/Documents/pub-key-execute");
+        servletResponse.getWriter().write(Base64.getEncoder().encodeToString(encrypt(plainResponse.getBytes(), publicKeyExecutor)));
+        servletResponse.getWriter().write("\n");
+        servletResponse.getWriter().write(signedResponse);
     }
 
     public byte[] getEncryptedData(String message) {
@@ -150,32 +150,30 @@ public class DecryptFilter implements Filter {
             skm = new SymmetricKeyManager(SECRET, 16, "AES");
             output = skm.decrypt(message);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException | NoSuchPaddingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvalidKeyException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IllegalBlockSizeException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (BadPaddingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return output;
     }
 
     //The method that signs the data using the private key that is stored in keyFile path
-    public String sign(String data, PrivateKey keyFile) throws InvalidKeyException, Exception{
+    public byte[] sign(String data, PrivateKey keyFile)
+            throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature privateSignature = Signature.getInstance(SIGNATURE_ALGORITHM);
         privateSignature.initSign(keyFile);
         privateSignature.update(data.getBytes(UTF_8));
 
         byte[] signature = privateSignature.sign();
-        return Base64.getEncoder().encodeToString(signature);
+        return signature;
     }
 
-    public static boolean verify(String plainText, String signature, PublicKey publicKey) throws Exception {
+    public static boolean verify(String plainText, String signature, PublicKey publicKey)
+            throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         Signature publicSignature = Signature.getInstance(SIGNATURE_ALGORITHM);
         publicSignature.initVerify(publicKey);
         publicSignature.update(plainText.getBytes(UTF_8));
@@ -185,9 +183,7 @@ public class DecryptFilter implements Filter {
         return publicSignature.verify(signatureBytes);
     }
 
-    private PrivateKey getPrivateKey() {
-        String filenamePrivKey = "/home/virt-atm/Documents/priv-key-again";
-
+    private PrivateKey getPrivateKey(String filenamePrivKey) {
         try {
             File privKeyFile = new File(filenamePrivKey);
 
@@ -205,25 +201,19 @@ public class DecryptFilter implements Filter {
 
             return privKey;
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
         return null;
     }
 
-    private PublicKey getPublicKey() {
-        String filenamePubKey = "/home/virt-atm/Documents/pub-key-again";
-
+    private PublicKey getPublicKey(String filenamePubKey) {
         try {
             File pubKeyFile = new File(filenamePubKey);
 
@@ -240,16 +230,12 @@ public class DecryptFilter implements Filter {
 
             return pubKey;
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
