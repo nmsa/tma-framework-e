@@ -1,6 +1,7 @@
 package eubr.atmosphere.tma.actuator;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import eubr.atmosphere.tma.actuator.examples.Configuration;
 import eubr.atmosphere.tma.actuator.services.RestServices;
 
 @RestController
@@ -33,7 +35,7 @@ public class KubernetesActuator implements Actuator {
         System.out.println("resourceId: " + actuatorPayload.getResourceId());
         System.out.println("messageId: " + actuatorPayload.getMessageId());
         System.out.println("timestamp: " + actuatorPayload.getTimestamp());
-        Map<String, String> config = actuatorPayload.getConfiguration();
+        List<Configuration> config = actuatorPayload.getConfiguration();
         System.out.println(config);
 
         try {

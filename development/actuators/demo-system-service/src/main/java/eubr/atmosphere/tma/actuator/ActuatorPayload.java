@@ -1,13 +1,15 @@
 package eubr.atmosphere.tma.actuator;
 
-import java.util.Map;
+import java.util.List;
+
+import eubr.atmosphere.tma.actuator.examples.Configuration;
 
 public class ActuatorPayload {
     private String action;
     private int resourceId;
     private int messageId;
     private Long timestamp;
-    private Map<String, String> configuration;
+    private List<Configuration> configuration;
 
     public String getAction() {
         return action;
@@ -25,13 +27,13 @@ public class ActuatorPayload {
         this.resourceId = resourceId;
     }
 
-    public Map<String, String> getConfiguration() {
-        return configuration;
-    }
+	public List<Configuration> getConfiguration() {
+		return configuration;
+	}
 
-    public void setConfiguration(Map<String, String> configuration) {
-        this.configuration = configuration;
-    }
+	public void setConfiguration(List<Configuration> configuration) {
+		this.configuration = configuration;
+	}
 
     public int getMessageId() {
         return messageId;

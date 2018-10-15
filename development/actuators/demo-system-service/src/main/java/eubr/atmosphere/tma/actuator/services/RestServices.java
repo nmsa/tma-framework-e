@@ -6,14 +6,21 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import eubr.atmosphere.tma.actuator.examples.Configuration;
 
 public class RestServices {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestServices.class);
 
     private static final String API_ENDPOINT = 
             "http://192.168.122.34:8089/apis/extensions/v1beta1/namespaces/default/deployments/tma-analyze/scale";
     
-    public static void requestPutRestService(Map<String, String> config) throws IOException {
+    public static void requestPutRestService(List<Configuration> config) throws IOException {
         // FIXME It would be better to use PATCH instead of PUT.
         //       However, the first experiments did not work, and we decided to move with PUT.
         URL url = new URL(API_ENDPOINT);
@@ -24,15 +31,8 @@ public class RestServices {
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
 
-        String newPayload = "{\n" +
-                "  \"metadata\": {\n" +
-                "    \"namespace\": \"" + config.get("metadata.namespace") + "\",\n" +
-                "    \"name\": \"" + config.get("metadata.name") + "\"\n" +
-                "  },\n" +
-                "  \"spec\": {\n" +
-                "    \"replicas\": " + config.get("spec.replicas") + "\n" +
-                "  }\n" +
-                "}";
+        String newPayload = createPayload(config);
+        LOGGER.info(newPayload);
 
         con.setDoOutput(true);
         DataOutputStream out = new DataOutputStream(con.getOutputStream());
@@ -51,5 +51,42 @@ public class RestServices {
         in.close();
 
         con.disconnect();
+    }
+
+    private static String createPayload(List<Configuration> config) {
+        String namespace = "";
+        String name = "";
+        String replicas = "";
+
+        for (Configuration conf : config) {
+            switch (conf.getKeyName()) {
+            case "metadata.namespace":
+                namespace = conf.getValue();
+                break;
+
+            case "metadata.name":
+                name = conf.getValue();
+                break;
+
+            case "spec.replicas":
+                replicas = conf.getValue();
+                break;
+
+            default:
+                LOGGER.warn("Unknown value: {}", conf.toString());
+                break;
+            }
+        }
+
+        String newPayload = "{\n" +
+                "  \"metadata\": {\n" +
+                "    \"namespace\": \"" + namespace + "\",\n" +
+                "    \"name\": \"" + name + "\"\n" +
+                "  },\n" +
+                "  \"spec\": {\n" +
+                "    \"replicas\": " + replicas + "\n" +
+                "  }\n" +
+                "}";
+        return newPayload;
     }
 }
