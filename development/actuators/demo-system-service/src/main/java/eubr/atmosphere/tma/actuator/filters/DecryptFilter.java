@@ -33,6 +33,8 @@ public class DecryptFilter implements Filter {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(DecryptFilter.class);
 
+    private static final String BASE_DIR =  "/Users/josealexandredabruzzopereira/Projects/tma-framework-k/";
+
     // This is the current test:
     // curl --header "Content-Type: text/plain" --request POST --data-binary "@encrypted-message" http://localhost:8080/securePOC/act
 
@@ -47,7 +49,8 @@ public class DecryptFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         LOGGER.info("Logging Request {} : {}", req.getMethod(), req.getRequestURI());
 
-        PrivateKey privateKey = KeyManager.getPrivateKey("/home/virt-atm/Documents/priv-key-again");
+        // TODO: Test cases where the key is not valid
+        PrivateKey privateKey = KeyManager.getPrivateKey(BASE_DIR + "priv-key-actuator");
         byte[] bodyBytes = KeyManager.decrypt(getBody(req), privateKey);
         String decryptedData = new String(bodyBytes);
         LOGGER.info(decryptedData);
@@ -84,7 +87,7 @@ public class DecryptFilter implements Filter {
         String signedResponse = Base64.getEncoder().encodeToString(signedResponseByteArray);
         LOGGER.info("signedResponse: " + signedResponse);
 
-        PublicKey publicKeyExecutor = KeyManager.getPublicKey("/home/virt-atm/Documents/pub-key-execute");
+        PublicKey publicKeyExecutor = KeyManager.getPublicKey(BASE_DIR + "pub-key-execute");
         servletResponse.getWriter().write(Base64.getEncoder().encodeToString(KeyManager.encrypt(plainResponse.getBytes(), publicKeyExecutor)));
         servletResponse.getWriter().write("\n");
         servletResponse.getWriter().write(signedResponse);
