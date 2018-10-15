@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
 import eubr.atmosphere.tma.data.Configuration;
+import eubr.atmosphere.tma.execute.database.ActuatorManager;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
 import eubr.atmosphere.tma.execute.utils.RestServices;
 
@@ -27,11 +28,11 @@ public class Main
 
     private static void runConsumer() {
 
-        Action action = new Action("scale", 100);
+        Action action = new Action("scale", 100, 3);
         action.addConfiguration(new Configuration("metadata.namespace", "default"));
         action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
         action.addConfiguration(new Configuration("spec.replicas", "3"));
-        act(obtainActuator(action), action);
+        act(ActuatorManager.obtainActuatorByAction(action), action);
 
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
         int noMessageFound = 0;
@@ -73,7 +74,7 @@ public class Main
         LOGGER.info(record.toString());
         String stringJsonAction = record.value();
         Action action = new Gson().fromJson(stringJsonAction, Action.class);
-        act(obtainActuator(action), action);
+        act(ActuatorManager.obtainActuatorByAction(action), action);
     }
 
     private static void sleep(int millis) {
@@ -84,34 +85,13 @@ public class Main
         }
     }
 
-    private static Actuator obtainActuator(Action action) {
-        // This method can go to TMA-K component
-
-        // TODO: It needs to select the data from the database
-        Actuator actuator = new Actuator();
-        actuator.setAddress("http://10.1.60.117:8080/k8sActuator/act");
-        actuator.setPubKey("my-key");
-
-        return actuator;
-    }
-
     private static void act(Actuator actuator, Action action) {
-        // Perform the adaptation (Part of it will be moved to the Actuator)
+        // Request the service from the actuator to perform the adaptation
         try {
             RestServices.requestRestService(actuator, action);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        // TODO: Request the REST service (actuator), with the definition from the Action
-        /*LOGGER.info("ACTUATION TO BE IMPLEMENTED: " + actuator);
-        actuator.setAddress("https://jsonplaceholder.typicode.com/posts");
-        try {
-            RestServices.requestRestService(actuator, action);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
     }
 }

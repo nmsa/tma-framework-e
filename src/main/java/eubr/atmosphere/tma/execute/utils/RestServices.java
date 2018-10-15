@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.PublicKey;
 import java.util.Calendar;
-import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
 
@@ -19,9 +22,14 @@ public class RestServices {
 
     private static int messageId = 0;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestServices.class);
+
     public static void requestRestService(Actuator actuator, Action action) throws IOException {
         // Reference: https://www.baeldung.com/java-http-request
-        String payload = getJsonObject(action);
+        String jsonPayload = getJsonObject(action);
+        LOGGER.info(jsonPayload);
+        String payload = encryptMessage(actuator, jsonPayload);
+        LOGGER.info(payload);
         URL url = new URL(actuator.getAddress());
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
@@ -41,14 +49,14 @@ public class RestServices {
         StringBuffer content = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {
           content.append(inputLine);
-          System.out.println(inputLine);
+          LOGGER.info(inputLine);
         }
         in.close();
 
         con.disconnect();
     }
 
-    public static void requestPutRestService(Actuator actuator, Action action) throws IOException {
+    /*public static void requestPutRestService(Actuator actuator, Action action) throws IOException {
         // FIXME It would be better to use PATCH instead of PUT.
         //       However, the first experiments did not work, and we decided to move with PUT.
         URL url = new URL(actuator.getAddress() + action.getAction());
@@ -108,7 +116,7 @@ public class RestServices {
         in.close();
 
         con.disconnect();
-    }
+    }*/
 
     private static String getJsonObject(Action action) {
         JsonObject jsonObject = new JsonObject();
@@ -123,5 +131,12 @@ public class RestServices {
         jsonObject.addProperty("action", action.getAction());
         jsonObject.add("configuration", configurationJson);
         return jsonObject.toString();
+    }
+
+    private static String encryptMessage(Actuator actuator, String message) {
+        PublicKey pubKey = KeyManager.getPublicKey(actuator.getPubKey());
+        byte[] encryptedMessage = KeyManager.encrypt(message, pubKey);
+        LOGGER.info(encryptedMessage.toString());
+        return new String(encryptedMessage);
     }
 }
