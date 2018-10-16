@@ -28,10 +28,10 @@ public class ActuatorManager {
             ResultSet rs = DatabaseManager.executeQuery(ps);
 
             if (rs.next()) {
-                String address = ((String) rs.getObject("address"));
-                String pubKey = ((String) rs.getObject("pubKey"));
+                String address = (String) rs.getObject("address");
+                byte[] pubKey = (byte[]) rs.getBytes("pubKey");
                 LOGGER.info(address);
-                LOGGER.info(pubKey);
+                LOGGER.info(pubKey.toString());
                 actuator = new Actuator(action.getActuatorId(), address, pubKey);
             }
         } catch (SQLException e) {

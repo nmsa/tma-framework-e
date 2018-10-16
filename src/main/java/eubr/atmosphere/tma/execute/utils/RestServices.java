@@ -30,7 +30,9 @@ public class RestServices {
         LOGGER.info(jsonPayload);
         String payload = encryptMessage(actuator, jsonPayload);
         LOGGER.info(payload);
-        URL url = new URL(actuator.getAddress());
+
+        // TODO: It still needs to add the action
+        URL url = new URL(actuator.getAddress() + "/act");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json");

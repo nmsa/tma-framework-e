@@ -111,14 +111,12 @@ public class KeyManager {
         return null;
     }*/
 
-    public static PublicKey getPublicKey(String pubKeyString) {
+    public static PublicKey getPublicKey(byte[] bytesPubKey) {
         try {
-            byte[] pubKeyBytes = pubKeyString.getBytes();
-
             KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
 
             // decode public key
-            X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(pubKeyBytes);
+            X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(bytesPubKey);
             RSAPublicKey pubKey = (RSAPublicKey) keyFactory.generatePublic(pubSpec);
 
             return pubKey;
