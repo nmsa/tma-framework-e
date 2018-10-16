@@ -28,6 +28,20 @@ public class Main
 
     private static void runConsumer() {
 
+        Action action = new Action("scale", 100, 3);
+        action.addConfiguration(new Configuration("metadata.namespace", "default"));
+        action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
+        action.addConfiguration(new Configuration("spec.replicas", "3"));
+        try {
+            act(ActuatorManager.obtainActuatorByAction(action), action);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            sleep(60000);
+        }
+
+
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
         int noMessageFound = 0;
         int maxNoMessageFoundCount = Integer.parseInt(

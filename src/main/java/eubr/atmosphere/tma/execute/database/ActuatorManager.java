@@ -16,7 +16,6 @@ public class ActuatorManager {
     
     public static Actuator obtainActuatorByAction(Action action) {
         // TODO: This method can go to TMA-K component
-        // TODO: It needs to select the data from the database
         Actuator actuator = null;
 
         String sql = "select address, pubKey from Actuator "
@@ -32,6 +31,7 @@ public class ActuatorManager {
                 String address = ((String) rs.getObject("address"));
                 String pubKey = ((String) rs.getObject("pubKey"));
                 LOGGER.info(address);
+                LOGGER.info(pubKey);
                 actuator = new Actuator(action.getActuatorId(), address, pubKey);
             }
         } catch (SQLException e) {
