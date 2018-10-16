@@ -28,12 +28,6 @@ public class Main
 
     private static void runConsumer() {
 
-        Action action = new Action("scale", 100, 3);
-        action.addConfiguration(new Configuration("metadata.namespace", "default"));
-        action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
-        action.addConfiguration(new Configuration("spec.replicas", "3"));
-        act(ActuatorManager.obtainActuatorByAction(action), action);
-
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
         int noMessageFound = 0;
         int maxNoMessageFoundCount = Integer.parseInt(
