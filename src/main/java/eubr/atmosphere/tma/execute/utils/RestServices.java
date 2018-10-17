@@ -17,6 +17,8 @@ import java.util.Calendar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import eubr.atmosphere.tma.data.Action;
@@ -88,9 +90,12 @@ public class RestServices {
 
     private static String getJsonObject(Action action) {
         JsonObject jsonObject = new JsonObject();
-        JsonObject configurationJson = new JsonObject();
+        JsonArray configurationJson = new JsonArray();
         for (Configuration config : action.getConfigurationList()) {
-            configurationJson.addProperty(config.getKeyName(), config.getValue());
+            JsonObject configJson = new JsonObject();
+            configJson.addProperty("keyName", config.getKeyName());
+            configJson.addProperty("value", config.getValue());
+            configurationJson.add(configJson);
         }
 
         jsonObject.addProperty("resourceId", action.getResourceId());
