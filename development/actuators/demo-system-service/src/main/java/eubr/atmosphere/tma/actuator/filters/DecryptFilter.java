@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import eubr.atmosphere.tma.actuator.crypto.KeyManager;
+import eubr.atmosphere.tma.actuator.utils.PropertiesManager;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletRequestWritableWrapper;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseCopier;
 
@@ -32,8 +33,6 @@ import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseCopier;
 public class DecryptFilter implements Filter {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(DecryptFilter.class);
-
-    private static final String BASE_DIR =  "/Users/josealexandredabruzzopereira/Projects/tma-framework-k/";
 
     // This is the current test:
     // curl --header "Content-Type: text/plain" --request POST --data-binary "@encrypted-message" http://localhost:8080/securePOC/act
@@ -49,8 +48,9 @@ public class DecryptFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         LOGGER.info("Logging Request {} : {}", req.getMethod(), req.getRequestURI());
 
-        // TODO: Test cases where the key is not valid
-        PrivateKey privateKey = KeyManager.getPrivateKey(BASE_DIR + "priv-key-actuator");
+        // TODO: Handle cases where the key is not valid
+        String privateKeyPath = PropertiesManager.getInstance().getProperty("privateKeyActuatorPath");
+        PrivateKey privateKey = KeyManager.getPrivateKey(privateKeyPath);
         byte[] bodyBytes = KeyManager.decrypt(getBody(req), privateKey);
         String decryptedData = new String(bodyBytes);
         LOGGER.info(decryptedData);
@@ -87,7 +87,8 @@ public class DecryptFilter implements Filter {
         String signedResponse = Base64.getEncoder().encodeToString(signedResponseByteArray);
         LOGGER.info("signedResponse: " + signedResponse);
 
-        PublicKey publicKeyExecutor = KeyManager.getPublicKey(BASE_DIR + "pub-key-execute");
+        String publicKeyExecutorPath = PropertiesManager.getInstance().getProperty("publicKeyExecutorPath");
+        PublicKey publicKeyExecutor = KeyManager.getPublicKey(publicKeyExecutorPath);
         servletResponse.getWriter().write(Base64.getEncoder().encodeToString(KeyManager.encrypt(plainResponse.getBytes(), publicKeyExecutor)));
         servletResponse.getWriter().write("\n");
         servletResponse.getWriter().write(signedResponse);
