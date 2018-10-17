@@ -36,7 +36,12 @@ public class Main
         action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
         action.addConfiguration(new Configuration("spec.replicas", "3"));
         try {
-            act(ActuatorManager.obtainActuatorByAction(action), action);
+            Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
+            if (actuator != null) {
+                act(actuator, action);
+            } else {
+                LOGGER.warn("Actuator not found: (ActuatorId = {})", action.getActuatorId());
+            }
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
@@ -69,7 +74,7 @@ public class Main
 
               // Manipulate the records
               consumerRecords.forEach(record -> {
-                  validateValue(record);
+                  handleAction(record);
                });
 
               // commits the offset of record to broker.
@@ -81,11 +86,16 @@ public class Main
         }
     }
 
-    private static void validateValue(ConsumerRecord<Long, String> record) {
+    private static void handleAction(ConsumerRecord<Long, String> record) {
         LOGGER.info(record.toString());
         String stringJsonAction = record.value();
         Action action = new Gson().fromJson(stringJsonAction, Action.class);
-        act(ActuatorManager.obtainActuatorByAction(action), action);
+        Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
+        if (actuator != null) {
+            act(actuator, action);
+        } else {
+            LOGGER.warn("Actuator not found: (ActuatorId = {})", action.getActuatorId());
+        }
     }
 
     private static void sleep(int millis) {
