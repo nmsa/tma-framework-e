@@ -6,7 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SignatureException;
+import java.util.Base64;
 import java.util.Calendar;
 
 import org.slf4j.Logger;
@@ -24,15 +29,18 @@ public class RestServices {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestServices.class);
 
-    public static void requestRestService(Actuator actuator, Action action) throws IOException {
+    public static void requestRestService(Actuator actuator, Action action) throws IOException, InvalidKeyException, NoSuchAlgorithmException, SignatureException {
         // Reference: https://www.baeldung.com/java-http-request
         String jsonPayload = getJsonObject(action);
         LOGGER.info(jsonPayload);
-        String payload = encryptMessage(actuator, jsonPayload);
-        LOGGER.info(payload);
+
+        byte[] pubKeyBytes = Base64.getDecoder().decode(actuator.getPubKey());
+        PublicKey pubKey = KeyManager.getPublicKey(pubKeyBytes);
+
+        byte[] payload = encryptMessage(actuator, jsonPayload, pubKey);
 
         // TODO: It still needs to add the action
-        URL url = new URL(actuator.getAddress() + "/act");
+        URL url = new URL(actuator.getAddress() + "act");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json");
@@ -41,27 +49,47 @@ public class RestServices {
 
         con.setDoOutput(true);
         DataOutputStream out = new DataOutputStream(con.getOutputStream());
-        out.writeBytes(payload);
+        out.write(payload);
         out.flush();
         out.close();
 
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
+        String privateKeyPath = PropertiesManager.getInstance().getProperty("privateKeyPath");
+        PrivateKey privKeyExecutor = KeyManager.getPrivateKey(privateKeyPath);
+        handleResponse(con, pubKey, privKeyExecutor);
+        con.disconnect();
+    }
+
+    private static void handleResponse(HttpURLConnection con, PublicKey pubKey, PrivateKey privKeyExecutor)
+            throws IOException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuffer content = new StringBuffer();
+        int i = 0;
+        String decryptedMessage = "";
         while ((inputLine = in.readLine()) != null) {
-          content.append(inputLine);
-          LOGGER.info(inputLine);
+            content.append(inputLine);
+            LOGGER.info(inputLine);
+            if (i == 0) {
+                // data
+                byte[] encMessage = Base64.getDecoder().decode(inputLine);
+                LOGGER.info("byteArray.length: {} ", encMessage.length);
+                decryptedMessage = KeyManager.decrypt(encMessage, privKeyExecutor);
+            }
+            if (i == 1) {
+                // signature
+                LOGGER.info("signature: {}", inputLine);
+                LOGGER.info("valid? {}", SignatureManager.verifySignature(
+                        decryptedMessage.getBytes(), Base64.getDecoder().decode(inputLine), pubKey));
+            }
+            i++;
         }
         in.close();
-
-        con.disconnect();
     }
 
     private static String getJsonObject(Action action) {
         JsonObject jsonObject = new JsonObject();
         JsonObject configurationJson = new JsonObject();
-        for (Configuration config: action.getConfigurationList()) {
+        for (Configuration config : action.getConfigurationList()) {
             configurationJson.addProperty(config.getKeyName(), config.getValue());
         }
 
@@ -73,10 +101,9 @@ public class RestServices {
         return jsonObject.toString();
     }
 
-    private static String encryptMessage(Actuator actuator, String message) {
-        PublicKey pubKey = KeyManager.getPublicKey(actuator.getPubKey());
+    private static byte[] encryptMessage(Actuator actuator, String message, PublicKey pubKey) {
         byte[] encryptedMessage = KeyManager.encrypt(message, pubKey);
         LOGGER.info(encryptedMessage.toString());
-        return new String(encryptedMessage);
+        return encryptedMessage;
     }
 }

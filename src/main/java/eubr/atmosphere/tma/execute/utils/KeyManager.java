@@ -1,11 +1,9 @@
 package eubr.atmosphere.tma.execute.utils;
 
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.Key;
@@ -13,13 +11,11 @@ import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 
 import javax.crypto.Cipher;
 
@@ -37,6 +33,7 @@ public class KeyManager {
      * String to hold name of the encryption algorithm.
      */
     public static final String ALGORITHM = "RSA";
+    public static final String SIGNATURE_ALGORITHM = "SHA1withRSA";
 
     public static final Charset UTF_8 = Charset.forName("UTF-8");
 
@@ -66,18 +63,7 @@ public class KeyManager {
         return cipherText;
     }
 
-    /*static String decryptMessage(byte[] encMessage) {
-        String result = "";
-        if (priv == null) {
-            LOGGER.error("You need to define a key before decrypting the message!\n");
-        } else  {
-            result = decrypt(encMessage, priv);
-            LOGGER.info(result);
-        }
-        return result;
-    }
-
-    private static PrivateKey getPrivateKey(String filenamePrivKey) {
+    public static PrivateKey getPrivateKey(String filenamePrivKey) {
         try {
             File privKeyFile = new File(filenamePrivKey);
 
@@ -109,7 +95,7 @@ public class KeyManager {
         }
 
         return null;
-    }*/
+    }
 
     public static PublicKey getPublicKey(byte[] bytesPubKey) {
         try {
@@ -130,37 +116,36 @@ public class KeyManager {
         return null;
     }
 
-    /*static String decryptMessage(String filename, PrivateKey privKey) {
-        byte[] encMessage = null;
-        String decryptedMessage = "";
+    public static PublicKey getPublicKey(String filenamePubKey) {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            String st;
-            int i = 0;
-            while ((st = br.readLine()) != null) {
-                if (i == 0) {
-                    // data
-                    encMessage = Base64.getDecoder().decode(st);
-                    System.out.println("byteArray.length: " + encMessage.length);
-                    decryptedMessage = decrypt(encMessage, privKey);
-                }
-                if (i == 1) {
-                    // signature
-                    System.out.println("signature: " + st);
-                    System.out.println(verifySignature(decryptedMessage.getBytes(UTF_8), Base64.getDecoder().decode(st), getPublicKey(getBaseDir() + "pub-key-again")));
-                }
+            File pubKeyFile = new File(filenamePubKey);
 
-                i++;
-            }
-            br.close();
+            DataInputStream dis = new DataInputStream(new FileInputStream(pubKeyFile));
+            byte[] pubKeyBytes = new byte[(int) pubKeyFile.length()];
+            dis.readFully(pubKeyBytes);
+            dis.close();
+
+            KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+
+            // decode public key
+            X509EncodedKeySpec pubSpec = new X509EncodedKeySpec(pubKeyBytes);
+            RSAPublicKey pubKey = (RSAPublicKey) keyFactory.generatePublic(pubSpec);
+
+            return pubKey;
+        } catch (FileNotFoundException e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
-        } catch (Exception e) {
+        } catch (InvalidKeySpecException e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
         }
-        return decryptedMessage;
+        return null;
     }
 
     public static String decrypt(byte[] text, Key key) {
@@ -178,5 +163,5 @@ public class KeyManager {
             e.printStackTrace();
         }
         return new String(dectyptedText);
-    }*/
+    }
 }

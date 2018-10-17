@@ -1,6 +1,9 @@
 package eubr.atmosphere.tma.execute;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -28,7 +31,7 @@ public class Main
 
     private static void runConsumer() {
 
-        Action action = new Action("scale", 100, 3);
+        Action action = new Action("scale", 100, 5);
         action.addConfiguration(new Configuration("metadata.namespace", "default"));
         action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
         action.addConfiguration(new Configuration("spec.replicas", "3"));
@@ -98,6 +101,15 @@ public class Main
         try {
             RestServices.requestRestService(actuator, action);
         } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SignatureException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

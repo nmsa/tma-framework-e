@@ -29,7 +29,7 @@ public class ActuatorManager {
 
             if (rs.next()) {
                 String address = (String) rs.getObject("address");
-                byte[] pubKey = (byte[]) rs.getBytes("pubKey");
+                String pubKey = (String) rs.getObject("pubKey");
                 LOGGER.info(address);
                 LOGGER.info(pubKey.toString());
                 actuator = new Actuator(action.getActuatorId(), address, pubKey);
