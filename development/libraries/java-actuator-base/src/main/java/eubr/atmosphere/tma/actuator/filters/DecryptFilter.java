@@ -28,7 +28,7 @@ import eubr.atmosphere.tma.actuator.utils.PropertiesManager;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletRequestWritableWrapper;
 import eubr.atmosphere.tma.actuator.wrappers.HttpServletResponseCopier;
 
-@WebFilter(filterName = "decryptFilter", urlPatterns = {"/securePOC*"})
+@WebFilter(filterName = "decryptFilter")
 @Component
 public class DecryptFilter implements Filter {
     
@@ -100,7 +100,6 @@ public class DecryptFilter implements Filter {
     private byte[] getBody(HttpServletRequest request) {
         try {
             byte[] body = IOUtils.toByteArray(request.getInputStream());
-            LOGGER.info( "This is the body! : {}", body);
             return body;
         } catch (IOException e) {
             e.printStackTrace();

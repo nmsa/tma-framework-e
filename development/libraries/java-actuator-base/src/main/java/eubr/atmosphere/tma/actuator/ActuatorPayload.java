@@ -3,6 +3,12 @@ package eubr.atmosphere.tma.actuator;
 import java.util.List;
 
 public class ActuatorPayload {
+    @Override
+    public String toString() {
+        return "ActuatorPayload [action=" + action + ", resourceId=" + resourceId + ", messageId=" + messageId
+                + ", timestamp=" + timestamp + ", configuration=" + configuration + "]";
+    }
+
     private String action;
     private int resourceId;
     private int messageId;
