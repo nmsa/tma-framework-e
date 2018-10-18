@@ -2,8 +2,6 @@ package eubr.atmosphere.tma.actuator;
 
 import java.util.List;
 
-import eubr.atmosphere.tma.actuator.examples.Configuration;
-
 public class ActuatorPayload {
     private String action;
     private int resourceId;

@@ -1,4 +1,4 @@
-package eubr.atmosphere.tma.actuator.examples;
+package eubr.atmosphere.tma.actuator;
 
 public class Configuration {
 
