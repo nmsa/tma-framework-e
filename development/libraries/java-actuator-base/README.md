@@ -30,5 +30,11 @@ To use the library in the development of your actuator, you just need to include
 </dependency>
 ```
 
-
 Note: check the [demo-actuator-java](../../actuators/demo-actuator-java) for mode detailed demonstration of the usage.
+
+## Main Features
+
+- **Actuator**: interface to be implemented by the Actuators with the needed operations;
+- **ActuatorPayload**: class to be used as parameter of the `act` operation according to the definition in [here](https://github.com/eubr-atmosphere/tma-framework-e/tree/master#actuators-definition);
+- **DecryptFilter**: filter used to both decrypt and encrypt the request from the `Executor` component to the Actuator. The path definition to the public and private key of the actuator as well as the public key from the executor should be provided in the configuration file, whose name should be `application.properties`. One example can be seen [here](https://github.com/eubr-atmosphere/tma-framework-e/blob/master/development/actuators/demo-actuator-java/src/main/resources/application.properties);
+- **PropertiesManager**: class used to manipulate the configuration file.
