@@ -34,11 +34,6 @@ public class DecryptFilter implements Filter {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(DecryptFilter.class);
 
-    // This is the current test:
-    // curl --header "Content-Type: text/plain" --request POST --data-binary "@encrypted-message" http://localhost:8080/securePOC/act
-
-    // Reference: https://www.taringamberini.com/en/blog/java/adding-encryption-to-a-restful-web-service/
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException { }
 
