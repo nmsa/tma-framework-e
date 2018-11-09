@@ -31,7 +31,7 @@ public class ActuatorManager {
                 String address = (String) rs.getObject("address");
                 String pubKey = (String) rs.getObject("pubKey");
                 LOGGER.info(address);
-                LOGGER.info(pubKey.toString());
+                //LOGGER.info(pubKey.toString());
                 actuator = new Actuator(action.getActuatorId(), address, pubKey);
             }
         } catch (SQLException e) {

@@ -73,12 +73,12 @@ public class RestServices {
             if (i == 0) {
                 // data
                 byte[] encMessage = Base64.getDecoder().decode(inputLine);
-                LOGGER.info("byteArray.length: {} ", encMessage.length);
+                //LOGGER.info("byteArray.length: {} ", encMessage.length);
                 decryptedMessage = KeyManager.decrypt(encMessage, privKeyExecutor);
             }
             if (i == 1) {
                 // signature
-                LOGGER.info("signature: {}", inputLine);
+                //LOGGER.info("signature: {}", inputLine);
                 LOGGER.info("valid? {}", SignatureManager.verifySignature(
                         decryptedMessage.getBytes(), Base64.getDecoder().decode(inputLine), pubKey));
             }
@@ -107,7 +107,7 @@ public class RestServices {
 
     private static byte[] encryptMessage(Actuator actuator, String message, PublicKey pubKey) {
         byte[] encryptedMessage = KeyManager.encrypt(message, pubKey);
-        LOGGER.info(encryptedMessage.toString());
+        //LOGGER.info(encryptedMessage.toString());
         return encryptedMessage;
     }
 }
