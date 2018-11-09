@@ -69,7 +69,7 @@ public class RestServices {
         String decryptedMessage = "";
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
-            LOGGER.info(inputLine);
+            //LOGGER.info(inputLine);
             if (i == 0) {
                 // data
                 byte[] encMessage = Base64.getDecoder().decode(inputLine);
