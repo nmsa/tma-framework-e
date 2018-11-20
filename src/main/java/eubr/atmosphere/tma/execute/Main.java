@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
-import eubr.atmosphere.tma.data.Configuration;
 import eubr.atmosphere.tma.execute.database.ActuatorManager;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
 import eubr.atmosphere.tma.execute.utils.RestServices;
@@ -30,25 +29,6 @@ public class Main
     }
 
     private static void runConsumer() {
-
-        Action action = new Action("scale", 100, 5);
-        action.addConfiguration(new Configuration("metadata.namespace", "default"));
-        action.addConfiguration(new Configuration("metadata.name", "tma-analyze"));
-        action.addConfiguration(new Configuration("spec.replicas", "3"));
-        try {
-            Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
-            if (actuator != null) {
-                act(actuator, action);
-            } else {
-                LOGGER.warn("Actuator not found: (ActuatorId = {})", action.getActuatorId());
-            }
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            sleep(60000);
-        }
-
 
         Consumer<Long, String> consumer = ConsumerCreator.createConsumer();
         int noMessageFound = 0;
