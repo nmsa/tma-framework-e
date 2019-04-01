@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Execute Component @ TMA Framework
 
 The key components of the of the [**ATMOSPHERE**](http://www.atmosphere-eubrazil.eu) ecosystem will provide adaptation mechanisms to cope with the trustworthiness level goals.
@@ -56,3 +57,29 @@ The interaction with TMA will be done through Actuators, which will be provided 
 * `resourceId` -- identifies the resource that is the subject of the adaptation
 * `action` -- name of the action to be performed. This will be used to inform the ActuatorAPI about which action to be performed
 * `config` -- list (key/value) of attributes to execute the operation
+=======
+# tma-execute
+
+This project aims to:
+* Consume the items from a topic queue;
+* Perform the adaption defined in the item of the queue.
+
+## Prerequisites
+
+This component requires the software available in [tma-utils](https://github.com/joseadp/tma-utils).
+
+## Installation
+
+This is a simple module to execute the plan from TMA.
+
+To build the jar, you should run the following command on the worker node:
+```sh
+sh build.sh
+```
+
+To deploy the pod in the cluster, you should run the following command on the master node:
+
+```sh
+kubectl create -f tma-execute.yaml
+```
+>>>>>>> 47eb1863d105102c56d8b9bb0bff595528e106dc
