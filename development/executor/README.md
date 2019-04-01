@@ -6,7 +6,7 @@ This project aims to:
 
 ## Prerequisites
 
-This component requires the software available in [tma-utils](https://github.com/eubr-atmosphere/tma-framework/tree/dev/common/common/tma-utils).
+This component requires the software available in [tma-utils](https://github.com/eubr-atmosphere/tma-framework/tree/master/common/tma-utils).
 
 ## Installation
 
