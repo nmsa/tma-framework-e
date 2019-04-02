@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
+import eubr.atmosphere.tma.data.Plan;
+import eubr.atmosphere.tma.execute.database.ActionManager;
 import eubr.atmosphere.tma.execute.database.ActuatorManager;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
 import eubr.atmosphere.tma.execute.utils.RestServices;
@@ -54,7 +56,7 @@ public class Main
 
               // Manipulate the records
               consumerRecords.forEach(record -> {
-                  handleAction(record);
+                  handlePlan(record);
                });
 
               // commits the offset of record to broker.
@@ -66,10 +68,11 @@ public class Main
         }
     }
 
-    private static void handleAction(ConsumerRecord<Long, String> record) {
+    private static void handlePlan(ConsumerRecord<Long, String> record) {
         LOGGER.info(record.toString());
         String stringJsonAction = record.value();
-        Action action = new Gson().fromJson(stringJsonAction, Action.class);
+        Plan plan = new Gson().fromJson(stringJsonAction, Plan.class);
+        Action action = ActionManager.obtainActionById(plan.getActionList().get(0).getActionId());
         Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
         if (actuator != null) {
             act(actuator, action);
