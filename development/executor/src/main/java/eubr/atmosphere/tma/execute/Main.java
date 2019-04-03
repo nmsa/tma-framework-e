@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
+import java.util.List;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -15,9 +16,11 @@ import com.google.gson.Gson;
 
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
+import eubr.atmosphere.tma.data.Configuration;
 import eubr.atmosphere.tma.data.Plan;
 import eubr.atmosphere.tma.execute.database.ActionManager;
 import eubr.atmosphere.tma.execute.database.ActuatorManager;
+import eubr.atmosphere.tma.execute.database.ConfigurationManager;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
 import eubr.atmosphere.tma.execute.utils.RestServices;
 
@@ -73,6 +76,13 @@ public class Main
         String stringJsonAction = record.value();
         Plan plan = new Gson().fromJson(stringJsonAction, Plan.class);
         Action action = ActionManager.obtainActionById(plan.getActionList().get(0).getActionId());
+
+        List<Configuration> configList =
+                ConfigurationManager.obtainConfiguration(plan.getPlanId(), action.getActionId());
+        for (Configuration config: configList) {
+            action.addConfiguration(config);
+        }
+
         Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
         if (actuator != null) {
             act(actuator, action);
