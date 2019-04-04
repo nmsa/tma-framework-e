@@ -12,13 +12,12 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.gson.Gson;
-
 import eubr.atmosphere.tma.data.Action;
+import eubr.atmosphere.tma.data.ActionPlan;
 import eubr.atmosphere.tma.data.Actuator;
 import eubr.atmosphere.tma.data.Configuration;
-import eubr.atmosphere.tma.data.Plan;
 import eubr.atmosphere.tma.execute.database.ActionManager;
+import eubr.atmosphere.tma.execute.database.ActionPlanManager;
 import eubr.atmosphere.tma.execute.database.ActuatorManager;
 import eubr.atmosphere.tma.execute.database.ConfigurationManager;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
@@ -73,22 +72,29 @@ public class Main
 
     private static void handlePlan(ConsumerRecord<Long, String> record) {
         LOGGER.info(record.toString());
-        String stringJsonAction = record.value();
-        Plan plan = new Gson().fromJson(stringJsonAction, Plan.class);
-        Action action = ActionManager.obtainActionById(plan.getActionList().get(0).getActionId());
+        String stringPlanId = record.value();
+        Integer planId = Integer.parseInt(stringPlanId);
+        List<ActionPlan> actionPlanList = ActionPlanManager.obtainActionPlanByPlanId(planId);
 
-        List<Configuration> configList =
-                ConfigurationManager.obtainConfiguration(plan.getPlanId(), action.getActionId());
-        for (Configuration config: configList) {
-            action.addConfiguration(config);
-        }
+        // TODO Change the status of the plan to in progress
+        for (ActionPlan actionPlan: actionPlanList) {
+            Action action = ActionManager.obtainActionById(actionPlan.getActionId());
+            List<Configuration> configList =
+                    ConfigurationManager.obtainConfiguration(planId, actionPlan.getActionId());
+            for (Configuration config: configList) {
+                action.addConfiguration(config);
+            }
 
-        Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
-        if (actuator != null) {
-            act(actuator, action);
-        } else {
-            LOGGER.warn("Actuator not found: (ActuatorId = {})", action.getActuatorId());
+            // TODO Change the status of the action to in progress
+            Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
+            if (actuator != null) {
+                act(actuator, action);
+                // TODO Change the status of the action to completed
+            } else {
+                LOGGER.warn("Actuator not found: (ActuatorId = {})", action.getActuatorId());
+            }
         }
+        // TODO Change the status of the plan to completed
     }
 
     private static void sleep(int millis) {
