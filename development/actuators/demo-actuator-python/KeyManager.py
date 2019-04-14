@@ -6,12 +6,8 @@ import os
 import errno
 
 class KeyManager:
-	def __init__(self, algorithm = "RSA", code = "UTF-8", signature_algorithm = "SHA1withRSA"):
-		self.algorithm = algorithm
-		self.code = code
-		self.signature_algorithm = signature_algorithm
 
-	def decrypt(text, private_key_string):
+	def decrypt(self, text, private_key_string):
 		# import private key to an RSA object
 		private_key = RSA.importKey(private_key_string)
 
@@ -19,24 +15,24 @@ class KeyManager:
 		decryptedText = private_key.decrypt(text)
 		return decryptedText
 
-	def encrypt(text, public_key_string):
+	def encrypt(self, text, public_key_string):
 		# import public key to an RSA object
 		public_key = RSA.importKey(public_key_string)
 
 		# encrypt the plain text using the public key
-		encrypted = public_key.encrypt(text,random.randint(1,101))
+		encryptedText = public_key.encrypt(text,random.randint(1,101))
 		return encryptedText
 
-	def getPrivateKey(filenameprivatekey):
-		# read private key from file
+	def getPrivateKey(self, filenameprivatekey):
 		try:
 			privKey = open(filenameprivatekey,"r").read()
-		    return privKey
+			return privKey
+
 		except EnvironmentError as e:
 			print(os.strerror(e.errno))
 			return None
 
-	def getPublicKey(filenamepublickey):
+	def getPublicKey(self, filenamepublickey):
 		# read public key from file
 		try:
 			pubkey = open(filenamepublickey,"r").read()
@@ -46,14 +42,14 @@ class KeyManager:
 			return None
 
 	# The method that signs the data using the private key that is stored in keyFile path
-	def sign(data,keyFile):
+	def sign(self, data,keyFile):
 		privateSignature = RSA.importKey(keyFile)
 		h = SHA.new(data)
 		signer = PKCS1_v1_5.new(privateSignature)
 		signature = signer.sign(h)
 		return signature
 
-	def verfify (plainText,signature,publicKey):
+	def verify(self, plainText,signature,publicKey):
 		publicSignature = RSA.importKey(publicKey)
 		h = SHA.new(plainText)
 		verifier = PKCS1_v1_5.new(publicSignature)
