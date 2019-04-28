@@ -1,9 +1,11 @@
 from KeyManager import KeyManager
 import base64
+import json
+from ActuatorPayload import ActuatorPayload
 
 class HandleRequest:
 
-	def encryptResponse(self, response, privateKey, plainResponse):
+	def generateResponse(self, response, privateKey, plainResponse):
 
 		keymanager = KeyManager()
 		signedResponse = keymanager.sign(response,privateKey)
@@ -15,12 +17,16 @@ class HandleRequest:
 		response = base64.b64encode(str(encryptedMessage))
 		response = response + "\n"
 		response = response + signedResponseEncoded
+		return response
 
-	def processRequest(self, request, response):
+	def processRequest(self, request):
 
 		# TODO: Handle Requests where the key is not valid
+
 		privateKeyPath = "keys/private_key.pem" 
 		keymanager = KeyManager()
 		privateKey = keymanager.getPrivateKey(privateKeyPath)
 		decryptData = keymanager.decrypt(request, privateKey)
-		encryptResponse(response, privateKey, plainResponse)
+		input = json.loads(request)
+		payload = ActuatorPayload(input)
+		return payload

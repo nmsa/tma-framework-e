@@ -4,7 +4,7 @@ import json
 import os
 import logging
 import logging.config
-from ActuatorPayload import ActuatorPayload
+from HandleRequest import HandleRequest
 
 k8sActuator = Flask(__name__)
 
@@ -14,8 +14,9 @@ logger.info('Starting Demo Actuator')
 @k8sActuator.route('/act', methods=['POST'])
 def process_message():
   # load json file
-  input = request.get_json(force=True)
-  payload = ActuatorPayload(input)
+  input = request.get_data()
+  message = HandleRequest()
+  payload = message.processRequest(input)
   return executeaction(payload.action)
 
 
