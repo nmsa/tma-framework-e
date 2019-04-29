@@ -17,9 +17,8 @@ def process_message():
   input = request.get_data()
   message = HandleRequest()
   payload = message.processRequest(input)
-  executeaction(payload.action)
-  return message.generateResponse("0")
-
+  operation = executeaction(payload.action)
+  return message.generateResponse(str(operation))
 
 # Execute the action
 def executeaction(action):
