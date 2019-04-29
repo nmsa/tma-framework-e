@@ -5,15 +5,18 @@ from ActuatorPayload import ActuatorPayload
 
 class HandleRequest:
 
-	def generateResponse(self, response, privateKey, plainResponse):
+	def generateResponse(self, plainResponse):
 
 		keymanager = KeyManager()
-		signedResponse = keymanager.sign(response,privateKey)
+		privateKeyPath = "keys/private_key.pem" 
+		privateKey = keymanager.getPrivateKey(privateKeyPath)
+
+		signedResponse = keymanager.sign(plainResponse,privateKey)
 		signedResponseEncoded = base64.b64encode(signedResponse)
 
 		publicKeyExecutorPath = "keys/pub-key-executor.pem"
 		publicKeyExecutor = keymanager.getPublicKey(publicKeyExecutorPath)
-		encryptedMessage = keymanager.encrypt(message,publicKeyExecutor)
+		encryptedMessage = keymanager.encrypt(plainResponse,publicKeyExecutor)
 		response = base64.b64encode(str(encryptedMessage))
 		response = response + "\n"
 		response = response + signedResponseEncoded
