@@ -6,12 +6,12 @@ import logging
 import logging.config
 from HandleRequest import HandleRequest
 
-k8sActuator = Flask(__name__)
+demoActuator = Flask(__name__)
 
 logger = logging.getLogger(__name__)
 logger.info('Starting Demo Actuator')
 
-@k8sActuator.route('/act', methods=['POST'])
+@demoActuator.route('/ActuatorAPI/act/', methods=['POST'])
 def process_message():
   # load json file
   input = request.get_data()
@@ -47,5 +47,5 @@ def setup_logging(default_path='logging.json', env_key='LOG_CFG'):
 if __name__ == '__main__':
      setup_logging()
      logger = logging.getLogger(__name__)
-     logger.info('Initializing  Demo Actuator')
-     k8sActuator.run(debug='True', host='0.0.0.0', port=5000)
+     logger.info('Initializing Demo Actuator')
+     demoActuator.run(debug='True', host='0.0.0.0', port=8080)
