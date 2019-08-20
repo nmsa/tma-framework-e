@@ -47,10 +47,5 @@ def setup_logging(default_path='logging.json', env_key='LOG_CFG'):
 if __name__ == '__main__':
      setup_logging()
      logger = logging.getLogger(__name__)
-<<<<<<< HEAD
-     logger.info('Initializing  Demo Actuator')
-     k8sActuator.run(debug='True', host='0.0.0.0', port=8080)
-=======
      logger.info('Initializing Demo Actuator')
      demoActuator.run(debug='True', host='0.0.0.0', port=8080)
->>>>>>> 7ef476129470ab2749c31087df7d71d56960dbdf
