@@ -8,13 +8,13 @@ class HandleRequest:
 	def generateResponse(self, plainResponse):
 
 		keymanager = KeyManager()
-		privateKeyPath = "keys/private_key.pem" 
+		privateKeyPath = "keys/priv-key-actuator" 
 		privateKey = keymanager.getPrivateKey(privateKeyPath)
 
 		signedResponse = keymanager.sign(plainResponse,privateKey)
 		signedResponseEncoded = base64.b64encode(signedResponse)
 
-		publicKeyExecutorPath = "keys/pub-key-executor.pem"
+		publicKeyExecutorPath = "keys/pub-key-executor"
 		publicKeyExecutor = keymanager.getPublicKey(publicKeyExecutorPath)
 		encryptedMessage = keymanager.encrypt(plainResponse,publicKeyExecutor)
 		response = base64.b64encode(str(encryptedMessage))
@@ -26,7 +26,7 @@ class HandleRequest:
 
 		# TODO: Handle Requests where the key is not valid
 
-		privateKeyPath = "keys/private_key.pem" 
+		privateKeyPath = "keys/priv-key-actuator" 
 		keymanager = KeyManager()
 		privateKey = keymanager.getPrivateKey(privateKeyPath)
 		decryptData = keymanager.decrypt(request, privateKey)
