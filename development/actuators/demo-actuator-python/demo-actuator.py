@@ -25,7 +25,8 @@ def executeaction(action):
   logger.info('Action: %s', action)
   switcher = {
     "scale": "action " + action,
-    "email": "action " + action
+    "sendMail": "action " + action,
+    "demoPython": "action" + action
   }
   return switcher.get(action, "Not defined action: " + action)
   
