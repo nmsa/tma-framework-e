@@ -14,7 +14,7 @@ class KeyManager:
 		private_key = RSA.importKey(private_key_string)
 
 		# decrypt the text with the private key
-                cypher = Crypto.Cipher.PKCS1_v1_5.new(private_key)
+		cypher = Crypto.Cipher.PKCS1_v1_5.new(private_key)
 		decryptedText = cypher.decrypt(text,15)
 		return decryptedText
 
@@ -57,7 +57,7 @@ class KeyManager:
 		publicSignature = RSA.importKey(publicKey)
 		h = SHA.new(plainText)
 		verifier = PKCS1_v1_5.new(publicSignature)
-		
+
 		if verifier.verify(h,signature):
 			message = "The signature is authentic"
 		else:
