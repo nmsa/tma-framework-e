@@ -30,6 +30,6 @@ class HandleRequest:
 		keymanager = KeyManager()
 		privateKey = keymanager.getPrivateKey(privateKeyPath)
 		decryptData = keymanager.decrypt(request, privateKey)
-		input = json.loads(request)
+		input = json.loads(decryptData)
 		payload = ActuatorPayload(input)
 		return payload

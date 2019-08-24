@@ -1,6 +1,8 @@
 from Crypto.PublicKey import RSA
-from Crypto.Signature import PKCS1_v1_5
+import Crypto.Cipher.PKCS1_v1_5
+import Crypto.Signature.PKCS1_v1_5
 from Crypto.Hash import SHA
+
 import random
 import os
 import errno
@@ -12,7 +14,8 @@ class KeyManager:
 		private_key = RSA.importKey(private_key_string)
 
 		# decrypt the text with the private key
-		decryptedText = private_key.decrypt(text)
+                cypher = Crypto.Cipher.PKCS1_v1_5.new(private_key)
+		decryptedText = cypher.decrypt(text,15)
 		return decryptedText
 
 	def encrypt(self, text, public_key_string):
@@ -24,6 +27,7 @@ class KeyManager:
 		return encryptedText
 
 	def getPrivateKey(self, filenameprivatekey):
+                # read private key from file
 		try:
 			privKey = open(filenameprivatekey,"r").read()
 			return privKey
@@ -45,7 +49,7 @@ class KeyManager:
 	def sign(self, data,keyFile):
 		privateSignature = RSA.importKey(keyFile)
 		h = SHA.new(data)
-		signer = PKCS1_v1_5.new(privateSignature)
+		signer = Crypto.Signature.PKCS1_v1_5.new(privateSignature)
 		signature = signer.sign(h)
 		return signature
 

@@ -11,7 +11,7 @@ demoActuator = Flask(__name__)
 logger = logging.getLogger(__name__)
 logger.info('Starting Demo Actuator')
 
-@demoActuator.route('/ActuatorAPI/act/', methods=['POST'])
+@demoActuator.route('/ActuatorAPI/act', methods=['POST'])
 def process_message():
   # load json file
   input = request.get_data()
