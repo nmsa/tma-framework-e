@@ -1,0 +1,274 @@
+2019-10-02 14:52:08,280 - __main__:51 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:22:46,635 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:24:26,263 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:24:26,278 - werkzeug:97 [INFO    ]  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+2019-10-02 21:24:26,341 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:24:26,687 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:24:26,700 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:24:26,793 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:40:20,055 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:40:20] "POST / HTTP/1.1" 404 -
+2019-10-02 21:40:22,664 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:40:22] "POST / HTTP/1.1" 404 -
+2019-10-02 21:44:15,149 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:44:15] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:46:02,610 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 21:46:02,689 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:46:02,989 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:46:03,002 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:46:03,002 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:46:10,334 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:46:10] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:47:02,585 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:47:02] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:48:58,727 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:48:58,740 - werkzeug:97 [INFO    ]  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+2019-10-02 21:48:58,743 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:48:59,074 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:48:59,088 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:48:59,089 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:49:01,173 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:49:01] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:51:45,199 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:51:45] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:10,350 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 21:52:10,405 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:52:10,718 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:52:10,739 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:52:10,740 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:52:11,765 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 21:52:11,824 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:52:12,140 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:52:12,163 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:52:12,163 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:52:13,636 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:13] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:22,396 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 21:52:22,458 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:52:22,783 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:52:22,799 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:52:22,800 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:52:23,872 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:23] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:26,030 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:26] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:26,837 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:26] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:27,334 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:27] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:27,745 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:27] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:28,163 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:28] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:28,562 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:28] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:28,956 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:28] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:29,350 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:29] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:29,716 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:29] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:30,093 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:30] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:30,483 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:30] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:39,045 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 21:52:39,118 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:52:39,426 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:52:39,442 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:52:39,443 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:52:40,963 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:40] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 21:52:53,661 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 21:52:53,710 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 21:52:54,065 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 21:52:54,078 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 21:52:54,079 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 21:52:54,102 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 21:52:54] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 22:02:24,760 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:02:24,815 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:02:25,071 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:02:25,083 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:02:25,084 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:02:32,180 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:02:32,248 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:02:32,608 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:02:32,620 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:02:32,620 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:02:33,166 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:02:33] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 22:02:46,937 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:02:47,020 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:02:47,473 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:02:47,485 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:02:47,485 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:02:47,523 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:02:47] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 22:03:03,841 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:03:03,905 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:03:04,208 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:03:04,220 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:03:04,221 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:03:04,228 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:03:04] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:03:24,687 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:03:24,761 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:03:25,103 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:03:25,115 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:03:25,115 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:03:25,968 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:03:25] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 22:03:39,401 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:03:39,458 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:03:39,782 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:03:39,799 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:03:39,800 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:03:40,493 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:03:40] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:03:46,927 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:03:46,973 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:03:47,341 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:03:47,361 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:03:47,362 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:03:48,271 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:03:48] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:04:36,294 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:04:36,354 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:04:36,637 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:04:36,649 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:04:36,649 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:04:53,004 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:04:53,078 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:04:53,454 - __main__:61 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:04:53,470 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:04:53,470 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:04:58,536 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:04:58,584 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:04:59,018 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:04:59,031 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:04:59,032 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:04:59,350 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:04:59] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:05:06,138 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:05:06,188 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:05:06,550 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:05:06,562 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:05:06,563 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:05:06,886 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:05:06] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:05:20,869 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:05:20,985 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:05:21,354 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:05:21,366 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:05:21,366 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:05:21,921 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:05:21] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:05:29,491 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:05:29,542 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:05:29,951 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:05:29,967 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:05:29,967 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:05:30,072 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:05:30] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:08:39,162 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:08:39,223 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:08:39,490 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:08:39,502 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:08:39,502 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:09:44,586 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:09:44,643 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:09:44,898 - __main__:60 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:09:44,910 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:09:44,910 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:10:19,605 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:10:19,663 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:10:19,977 - __main__:59 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:10:19,989 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:10:19,989 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:10:29,180 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:10:29,279 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:10:29,595 - __main__:59 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:10:29,607 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:10:29,608 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:10:30,619 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:10:30,713 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:14:17,824 - __main__:57 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:14:17,840 - werkzeug:97 [INFO    ]  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+2019-10-02 22:14:17,841 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:14:18,129 - __main__:57 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:14:18,140 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:14:18,141 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:14:21,690 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:14:21] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 22:14:42,655 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:14:42,728 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:14:43,018 - __main__:57 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:14:43,042 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:14:43,051 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:14:45,071 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:14:45] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 22:16:13,788 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:16:13,834 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:49:39,280 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:49:59,773 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:49:59,784 - werkzeug:97 [INFO    ]  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+2019-10-02 22:49:59,786 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:50:00,067 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:50:00,081 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:50:00,089 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:56:50,117 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:56:50] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 22:57:28,262 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:57:28,350 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:57:28,619 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:57:28,631 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:57:28,631 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:57:31,695 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:57:31,746 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:57:32,002 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:57:32,014 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:57:32,014 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:57:34,052 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:57:34,112 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:57:34,396 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:57:34,409 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:57:34,409 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:59:37,581 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 22:59:37,680 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 22:59:38,073 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 22:59:38,086 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 22:59:38,087 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 22:59:44,773 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 22:59:44] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 23:06:06,907 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:06:06,980 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:06:07,255 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:06:07,272 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:06:07,273 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:06:27,676 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:06:27,744 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:06:28,053 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:06:28,068 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:06:28,069 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:06:33,337 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:06:33] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 23:07:54,604 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:07:54,670 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:07:54,953 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:07:54,976 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:07:54,977 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:07:57,293 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:07:57] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 23:11:18,472 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:11:18,580 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:11:19,151 - __main__:75 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:11:19,203 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:11:19,203 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:20:20,018 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:20:20,136 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:22:08,473 - __main__:82 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:22:08,488 - werkzeug:97 [INFO    ]  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
+2019-10-02 23:22:08,489 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:22:08,787 - __main__:82 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:22:08,801 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:22:08,802 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:22:14,258 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:22:14] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 23:22:38,450 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:22:38,502 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:22:38,806 - __main__:81 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:22:38,820 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:22:38,821 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:24:15,721 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:24:15] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 23:24:42,307 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:24:42,379 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:24:42,684 - __main__:82 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:24:42,696 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:24:42,697 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:24:47,730 - urllib3.connectionpool:815 [DEBUG   ] Starting new HTTPS connection (1): 159.122.129.190:443
+2019-10-02 23:24:48,265 - urllib3.connectionpool:396 [DEBUG   ] https://159.122.129.190:443 "POST /api/messaging/cases/create HTTP/1.1" 401 802
+2019-10-02 23:24:48,305 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:24:48] "POST /ActuatorAPI/act HTTP/1.1" 500 -
+2019-10-02 23:25:05,205 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:25:05,285 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:25:05,590 - __main__:82 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:25:05,606 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:25:05,607 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:25:07,207 - urllib3.connectionpool:815 [DEBUG   ] Starting new HTTPS connection (1): 159.122.129.190:443
+2019-10-02 23:25:08,714 - urllib3.connectionpool:396 [DEBUG   ] https://159.122.129.190:443 "POST /api/messaging/cases/create HTTP/1.1" 401 802
+2019-10-02 23:25:08,719 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:25:08] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 23:28:14,165 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:28:14,245 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:28:14,621 - __main__:82 [INFO    ] Initializing Demo Actuator
+2019-10-02 23:28:14,657 - werkzeug:97 [WARNING ]  * Debugger is active!
+2019-10-02 23:28:14,657 - werkzeug:97 [INFO    ]  * Debugger PIN: 105-661-010
+2019-10-02 23:30:57,290 - urllib3.connectionpool:815 [DEBUG   ] Starting new HTTPS connection (1): 159.122.129.190:443
+2019-10-02 23:31:00,633 - urllib3.connectionpool:396 [DEBUG   ] https://159.122.129.190:443 "POST /api/messaging/cases/create HTTP/1.1" 200 None
+2019-10-02 23:31:00,635 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:31:00] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 23:31:50,235 - urllib3.connectionpool:815 [DEBUG   ] Starting new HTTPS connection (1): 159.122.129.190:443
+2019-10-02 23:31:51,028 - urllib3.connectionpool:396 [DEBUG   ] https://159.122.129.190:443 "POST /api/messaging/cases/create HTTP/1.1" 200 None
+2019-10-02 23:31:51,038 - werkzeug:97 [INFO    ] 127.0.0.1 - - [02/Oct/2019 23:31:51] "POST /ActuatorAPI/act HTTP/1.1" 200 -
+2019-10-02 23:36:10,554 - werkzeug:97 [INFO    ]  * Detected change in '/home/kubernetesworker/Desktop/tma-framework-e/development/actuators/cloudea-actuator/cloudea-actuator.py', reloading
+2019-10-02 23:36:10,617 - werkzeug:97 [INFO    ]  * Restarting with stat
+2019-10-02 23:36:10,872 - __main__:82 [INFO    ] Initializing Demo Actuator
