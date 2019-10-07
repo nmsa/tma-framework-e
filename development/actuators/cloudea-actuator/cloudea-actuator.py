@@ -19,16 +19,32 @@ def process_message():
   message = HandleRequest()
   payload = message.processRequest(input)
   if payload.action == "createCase":
+    cookies = login()
     data = createPayload(payload.configuration)
-    response = sendMessage(data)
+    response = sendMessage(data, cookies)
     return message.generateResponse(str(response))
   else: 
     return logger.info('Not defined action')
 
-def sendMessage(message):
+
+def login():
+
+  url = "https://159.122.129.190/api/login"
+
+  payload = "user=admin%40instance1-starling.com&password=1Q2w3e4r!&undefined="
+  headers = {
+      'Content-Type': "application/x-www-form-urlencoded",
+      'cache-control': "no-cache",
+      'Postman-Token': "d9d1f9c9-6ff8-43d6-80da-743716f62531"
+      }
+
+  response = requests.request("POST", url, data=payload, headers=headers, verify = False)
+
+  return response.cookies
+
+def sendMessage(message, cookies):
   url = "https://159.122.129.190/api/messaging/cases/create"
   headers = {'content-Type':'application/json'}
-  cookies = {'comilion-fw': 'DA05AA890DD8096BDDCC3D6E1A7C3EF9'}
   req = requests.post(url, data=json.dumps(message), headers=headers, verify=False, cookies=cookies)
   return req.status_code
 
