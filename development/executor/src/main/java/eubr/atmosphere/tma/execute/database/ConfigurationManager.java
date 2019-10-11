@@ -18,7 +18,7 @@ public class ConfigurationManager {
         String sql = "select c.configurationId, c.keyName, cd.value "
                 + "from Plan p "
                 + "inner join ActionPlan ap on p.planId = ap.planId "
-                + "inner join ConfigurationData cd on ap.actionPlanId = cd.actionPlanId "       
+                + "inner join ConfigurationData cd on ap.planId = cd.planId "
                 + "inner join Configuration c on cd.configurationId = c.configurationId "
                 + "where p.planId = ? "
                 + "and c.actionId = ? ;";
