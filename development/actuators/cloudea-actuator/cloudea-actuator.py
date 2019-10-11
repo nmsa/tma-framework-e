@@ -9,6 +9,24 @@ import requests
 
 cloudeaActuator = Flask(__name__)
 
+loginUrl = "https://159.122.129.190/api/login"
+createCaseUrl = "https://159.122.129.190/api/messaging/cases/create"
+
+def login():
+
+  payload = "user=admin%40instance1-starling.com&password=1Q2w3e4r!&undefined="
+  headers = {
+      'Content-Type': "application/x-www-form-urlencoded",
+      'cache-control': "no-cache",
+      'Postman-Token': "d9d1f9c9-6ff8-43d6-80da-743716f62531"
+      }
+
+  response = requests.request("POST", loginUrl, data=payload, headers=headers, verify = False)
+
+  return response.cookies
+
+cookies = login()
+
 logger = logging.getLogger(__name__)
 logger.info('Starting CloudEA Actuator')
 
@@ -18,34 +36,16 @@ def process_message():
   input = request.get_data()
   message = HandleRequest()
   payload = message.processRequest(input)
-  if payload.action == "createCase":
-    cookies = login()
-    data = createPayload(payload.configuration)
+  if payload['action'] == "createCase":
+    data = createPayload(payload['configuration'])
     response = sendMessage(data, cookies)
     return message.generateResponse(str(response))
   else: 
     return logger.info('Not defined action')
 
-
-def login():
-
-  url = "https://159.122.129.190/api/login"
-
-  payload = "user=admin%40instance1-starling.com&password=1Q2w3e4r!&undefined="
-  headers = {
-      'Content-Type': "application/x-www-form-urlencoded",
-      'cache-control': "no-cache",
-      'Postman-Token': "d9d1f9c9-6ff8-43d6-80da-743716f62531"
-      }
-
-  response = requests.request("POST", url, data=payload, headers=headers, verify = False)
-
-  return response.cookies
-
 def sendMessage(message, cookies):
-  url = "https://159.122.129.190/api/messaging/cases/create"
   headers = {'content-Type':'application/json'}
-  req = requests.post(url, data=json.dumps(message), headers=headers, verify=False, cookies=cookies)
+  req = requests.post(createCaseUrl, data=json.dumps(message), headers=headers, verify=False, cookies=cookies)
   return req.status_code
 
 def createPayload(config):
