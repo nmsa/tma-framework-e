@@ -1,0 +1,15 @@
+{
+    "action" : "createCase",
+    "resourceId" : 3, 
+    "messageId": 44,
+    "timestamp": 1539608150,
+    "configuration": [
+        {"keyName": "incidentId", "value": "38"},
+        {"keyName": "incidentSource", "value": "CloudEA"},
+        {"keyName": "subject", "value": "Non-complient policy discovered"},
+        {"keyName": "summary", "value": "Non-complient policy discovered by Boris Giterman. Please check your McAffee policy distribution"},
+        {"keyName": "is_public", "value": "true"},
+        {"keyName": "caseType", "value": "INCIDENT"},
+        {"keyName": "aggregatedDomain", "value": "Starling"}
+    ]
+}
