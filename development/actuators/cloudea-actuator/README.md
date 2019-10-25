@@ -1,11 +1,11 @@
-# Demo Actuator Python
+# CloudEA Actuator
 
-This folder contains the a demo actuator developed in Python.
+This folder contains the CloudEA actuator developed in Python.
 
 
 ## Prerequisites
 
-Python actuators require the installation of a package called tmalibrary. To do that, you should execute the following command to install that package.
+CloudEA actuator requires the installation of a package called `tmalibrary`. To do that, you should execute the following command to install that package.
 
 ```sh
 pip install tmalibrary
@@ -14,10 +14,10 @@ pip install tmalibrary
 
 ## Installation
 
-To use `demo-actuator-python` use the following command.
+To use CloudEA actuator use the following command.
 
 ```sh
-python demo-actuator.py
+python cloudea-actuator.py
 ```
 
 ## Authors
