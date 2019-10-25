@@ -96,5 +96,5 @@ def setup_logging(default_path='logging.json', env_key='LOG_CFG'):
 if __name__ == '__main__':
      setup_logging()
      logger = logging.getLogger(__name__)
-     logger.info('Initializing Demo Actuator')
+     logger.info('Initializing CloudEA Actuator')
      cloudeaActuator.run(debug='True', host='0.0.0.0', port=8080)
