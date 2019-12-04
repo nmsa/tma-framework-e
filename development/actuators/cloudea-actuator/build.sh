@@ -1,0 +1,1 @@
+docker build --no-cache -t cloudea-actuator:0.1  .
