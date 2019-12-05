@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import eubr.atmosphere.tma.data.Action;
 import eubr.atmosphere.tma.data.Actuator;
-import eubr.atmosphere.tma.utils.DatabaseManager;
+import eubr.atmosphere.tma.database.DatabaseManager;
 
 public class ActuatorManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(ActuatorManager.class);

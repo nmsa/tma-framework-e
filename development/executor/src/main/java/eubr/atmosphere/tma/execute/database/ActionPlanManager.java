@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eubr.atmosphere.tma.data.ActionPlan;
-import eubr.atmosphere.tma.utils.DatabaseManager;
+import eubr.atmosphere.tma.database.DatabaseManager;
 
 public class ActionPlanManager {
 

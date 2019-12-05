@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import eubr.atmosphere.tma.data.Action;
-import eubr.atmosphere.tma.utils.DatabaseManager;
+import eubr.atmosphere.tma.database.DatabaseManager;
 
 public class ActionManager {
 
