@@ -12,6 +12,8 @@ cloudeaActuator = Flask(__name__)
 loginUrl = "https://159.122.129.190/api/login"
 createCaseUrl = "https://159.122.129.190/api/messaging/cases/create"
 
+initialIncidentId = 1
+
 def login():
 
   payload = "user=admin%40instance1-starling.com&password=1Q2w3e4r!&undefined="
@@ -50,6 +52,8 @@ def sendMessage(message, cookies):
 
 def createPayload(config):
 
+  global initialIncidentId
+
   #for conf in config:
   #  if conf['keyName'] == "incidentId":
   #    incidentId = conf['value']
@@ -68,7 +72,8 @@ def createPayload(config):
   #  else : 
   #    return logger.error('Invalid configurations')
   
-  incidentId = 38
+  incidentId = initialIncidentId
+  initialIncidentId += 1
   incidentSource = "CloudEA" 
   subject = "Insufficient Security Control / Policy Coverage"
   summary = "The CloudEA system detected insufficient McAfee ePO Security Control /Policy coverage for the production environment. That might risk the organization and allow security breach. Make sure you review the ePO settings and policies."
