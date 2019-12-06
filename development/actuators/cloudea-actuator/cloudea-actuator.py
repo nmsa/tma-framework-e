@@ -70,8 +70,8 @@ def createPayload(config):
   
   incidentId = 38
   incidentSource = "CloudEA" 
-  subject = "Non-complient policy discovered"
-  summary = "Non-complient policy discovered by Boris Giterman. Please check your McAffee policy distribution"
+  subject = "Insufficient Security Control / Policy Coverage"
+  summary = "The CloudEA system detected insufficient McAfee ePO Security Control /Policy coverage for the production environment. That might risk the organization and allow security breach. Make sure you review the ePO settings and policies."
   is_public = "true"
   caseType = "INCIDENT"
   aggregatedDomain = "Starling"
