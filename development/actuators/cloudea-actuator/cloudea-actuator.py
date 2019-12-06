@@ -50,23 +50,31 @@ def sendMessage(message, cookies):
 
 def createPayload(config):
 
-  for conf in config:
-    if conf['keyName'] == "incidentId":
-      incidentId = conf['value']
-    elif conf['keyName'] == "incidentSource":
-      incidentSource = conf['value']
-    elif conf['keyName'] == "subject":
-      subject = conf['value']
-    elif conf['keyName'] == "summary":
-      summary = conf['value']
-    elif conf['keyName'] == "is_public":
-      is_public = conf['value']
-    elif conf['keyName'] == "caseType":
-      caseType = conf['value']
-    elif conf['keyName'] == "aggregatedDomain":
-      aggregatedDomain = conf['value']
-    else : 
-      return logger.error('Invalid configurations')
+  #for conf in config:
+  #  if conf['keyName'] == "incidentId":
+  #    incidentId = conf['value']
+  #  elif conf['keyName'] == "incidentSource":
+  #    incidentSource = conf['value']
+  #  elif conf['keyName'] == "subject":
+  #    subject = conf['value']
+  #  elif conf['keyName'] == "summary":
+  #    summary = conf['value']
+  #  elif conf['keyName'] == "is_public":
+  #    is_public = conf['value']
+  #  elif conf['keyName'] == "caseType":
+  #    caseType = conf['value']
+  #  elif conf['keyName'] == "aggregatedDomain":
+  #    aggregatedDomain = conf['value']
+  #  else : 
+  #    return logger.error('Invalid configurations')
+  
+  incidentId = 38
+  incidentSource = "CloudEA" 
+  subject = "Non-complient policy discovered"
+  summary = "Non-complient policy discovered by Boris Giterman. Please check your McAffee policy distribution"
+  is_public = "true"
+  caseType = "INCIDENT"
+  aggregatedDomain = "Starling"
 
   newPayload = {
   "incidentId": incidentId, 
