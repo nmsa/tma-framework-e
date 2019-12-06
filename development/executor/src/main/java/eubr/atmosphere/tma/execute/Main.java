@@ -74,6 +74,8 @@ public class Main
         LOGGER.info(record.toString());
         String stringPlanId = record.value();
         Integer planId = Integer.parseInt(stringPlanId);
+        if (planId == -1)
+            return;
         List<ActionPlan> actionPlanList = ActionPlanManager.obtainActionPlanByPlanId(planId);
 
         // TODO Change the status of the plan to in progress
