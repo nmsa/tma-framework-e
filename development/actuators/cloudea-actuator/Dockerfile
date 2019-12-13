@@ -1,4 +1,6 @@
-FROM    python:3.7
+FROM    python:3.7-alpine
+
+RUN 	apk add gcc g++ make libffi-dev openssl-dev
 
 RUN     pip install virtualenv
 RUN     pip install flask
