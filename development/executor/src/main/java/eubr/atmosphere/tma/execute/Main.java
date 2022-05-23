@@ -20,8 +20,10 @@ import eubr.atmosphere.tma.execute.database.ActionManager;
 import eubr.atmosphere.tma.execute.database.ActionPlanManager;
 import eubr.atmosphere.tma.execute.database.ActuatorManager;
 import eubr.atmosphere.tma.execute.database.ConfigurationManager;
+import eubr.atmosphere.tma.execute.database.PlanStateManager;
 import eubr.atmosphere.tma.execute.utils.PropertiesManager;
 import eubr.atmosphere.tma.execute.utils.RestServices;
+import java.time.Duration;
 
 public class Main 
 {
@@ -42,7 +44,7 @@ public class Main
         try {
             while (true) {
 
-              ConsumerRecords<Long, String> consumerRecords = consumer.poll(1000);
+              ConsumerRecords<Long, String> consumerRecords = consumer.poll(Duration.ofMillis(1000));
 
               // 1000 is the time in milliseconds consumer will wait if no record is found at broker.
               if (consumerRecords.count() == 0) {
@@ -76,9 +78,15 @@ public class Main
         Integer planId = Integer.parseInt(stringPlanId);
         if (planId == -1)
             return;
+        
+        PlanStateManager planStateManager = new PlanStateManager();
         List<ActionPlan> actionPlanList = ActionPlanManager.obtainActionPlanByPlanId(planId);
 
-        // TODO Change the status of the plan to in progress
+        //[NOTE] => STATUS are the same for plans and action plans
+        
+        //Change the status of the plan to in progress. 
+        planStateManager.setPlanStatus(planId, Integer.parseInt(ActionPlan.STATUS.IN_PROGRESS.toString()));
+        
         for (ActionPlan actionPlan: actionPlanList) {
             Action action = ActionManager.obtainActionById(actionPlan.getActionId());
             List<Configuration> configList =
@@ -87,16 +95,19 @@ public class Main
                 action.addConfiguration(config);
             }
 
-            // TODO Change the status of the action to in progress
+            //Change the status of the action to in progress
+            planStateManager.setActionStatus(planId, action.getActionId(),Integer.parseInt(ActionPlan.STATUS.IN_PROGRESS.toString()));
             Actuator actuator = ActuatorManager.obtainActuatorByAction(action);
             if (actuator != null) {
                 act(actuator, action);
-                // TODO Change the status of the action to completed
+                //Change the status of the action to completed
+                planStateManager.setActionStatus(planId, action.getActionId(), Integer.parseInt(ActionPlan.STATUS.COMPLETED.toString()));
             } else {
                 LOGGER.warn("Actuator not found: (ActuatorId = {})", action.getActuatorId());
             }
         }
-        // TODO Change the status of the plan to completed
+        //Change the status of the plan to completed
+        planStateManager.setPlanStatus(planId, Integer.parseInt(ActionPlan.STATUS.COMPLETED.toString()));
     }
 
     private static void sleep(int millis) {

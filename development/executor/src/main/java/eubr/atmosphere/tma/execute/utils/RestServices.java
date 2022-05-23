@@ -40,8 +40,7 @@ public class RestServices {
 
         byte[] payload = encryptMessage(actuator, jsonPayload, pubKey);
 
-        // TODO: It still needs to add the action
-        URL url = new URL(actuator.getAddress() + "act");
+        URL url = new URL(actuator.getAddress());
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json");
@@ -69,7 +68,6 @@ public class RestServices {
         String decryptedMessage = "";
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
-            //LOGGER.info(inputLine);
             if (i == 0) {
                 // data
                 byte[] encMessage = Base64.getDecoder().decode(inputLine);
