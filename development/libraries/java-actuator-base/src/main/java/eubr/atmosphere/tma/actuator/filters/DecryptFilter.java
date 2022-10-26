@@ -84,9 +84,10 @@ public class DecryptFilter implements Filter {
 
         String publicKeyExecutorPath = PropertiesManager.getInstance().getProperty("publicKeyExecutorPath");
         PublicKey publicKeyExecutor = KeyManager.getPublicKey(publicKeyExecutorPath);
-        servletResponse.getWriter().write(Base64.getEncoder().encodeToString(KeyManager.encrypt(plainResponse.getBytes(), publicKeyExecutor)));
-        servletResponse.getWriter().write("\n");
-        servletResponse.getWriter().write(signedResponse);
+        String finalResponse = Base64.getEncoder().encodeToString(KeyManager.encrypt(plainResponse.getBytes(), publicKeyExecutor));
+        finalResponse += "\n" + signedResponse;;
+        servletResponse.setContentLength(finalResponse.length());
+        servletResponse.getWriter().write(finalResponse);
     }
 
     @Override
